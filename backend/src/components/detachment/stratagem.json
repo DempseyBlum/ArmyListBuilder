@@ -1,0 +1,42 @@
+{
+  "collectionName": "detachment_stratagems",
+  "info": {
+    "displayName": "stratagem",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Strategic Plot",
+        "Battle Tactic",
+        "Epic Deed",
+        "Wargear"
+      ]
+    },
+    "when": {
+      "type": "richtext",
+      "required": true
+    },
+    "target": {
+      "type": "richtext",
+      "required": true
+    },
+    "cost": {
+      "type": "integer",
+      "required": true
+    },
+    "effect": {
+      "type": "richtext",
+      "required": true
+    },
+    "restrictions": {
+      "type": "richtext"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "unit_datasheets",
+  "info": {
+    "singularName": "unit-datasheet",
+    "pluralName": "unit-datasheets",
+    "displayName": "Datasheet",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "core_keywords": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::core-keyword.core-keyword",
+      "inversedBy": "datasheets"
+    },
+    "unit_keywords": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::unit-keyword.unit-keyword",
+      "inversedBy": "datasheets"
+    },
+    "faction": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::faction.faction",
+      "inversedBy": "datasheets"
+    },
+    "has_faction_ability": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "abilities": {
+      "type": "component",
+      "repeatable": true,
+      "component": "datasheet.ability"
+    },
+    "points_costs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "datasheet.points-breakpoint",
+      "required": true
+    },
+    "unit_composition_options": {
+      "type": "component",
+      "repeatable": true,
+      "component": "datasheet.unit-composition-option",
+      "required": true
+    },
+    "wargear_options": {
+      "type": "dynamiczone",
+      "components": [
+        "datasheet.replacement-per-10",
+        "datasheet.replacement-per-5",
+        "datasheet.replacement-for-single-model",
+        "datasheet.replacement-for-any-number",
+        "datasheet.this-model-may-replace",
+        "datasheet.this-model-can-be-equipped-with",
+        "datasheet.number-models-may-replace"
+      ]
+    }
+  }
+}

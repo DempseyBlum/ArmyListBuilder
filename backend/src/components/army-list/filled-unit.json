@@ -1,0 +1,19 @@
+{
+  "collectionName": "filled_units",
+  "info": {
+    "displayName": "filled unit"
+  },
+  "options": {},
+  "attributes": {
+    "datasheet": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::unit-datasheet.unit-datasheet"
+    },
+    "model_count": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    }
+  }
+}

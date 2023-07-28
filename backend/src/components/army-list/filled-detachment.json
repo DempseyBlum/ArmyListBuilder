@@ -1,0 +1,25 @@
+{
+  "collectionName": "filled_detachments",
+  "info": {
+    "displayName": "filled detachment",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "detachment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::detachment.detachment"
+    },
+    "units": {
+      "type": "component",
+      "repeatable": true,
+      "component": "army-list.filled-unit"
+    },
+    "enhancements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "army-list.filled-enhancement"
+    }
+  }
+}

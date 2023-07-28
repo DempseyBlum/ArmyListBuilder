@@ -1,0 +1,28 @@
+{
+  "collectionName": "unit_composition_models",
+  "info": {
+    "displayName": "unit composition option model",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "model": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::model.model"
+    },
+    "name_for_ordering": {
+      "type": "string",
+      "required": true
+    },
+    "min": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "max": {
+      "type": "integer",
+      "min": 1
+    }
+  }
+}

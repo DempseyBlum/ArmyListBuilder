@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "enhancements",
+  "info": {
+    "singularName": "enhancement",
+    "pluralName": "enhancements",
+    "displayName": "Enhancement",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "detachment": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::detachment.detachment",
+      "inversedBy": "enhancements"
+    },
+    "display_name": {
+      "type": "string",
+      "required": true
+    },
+    "flavour": {
+      "type": "richtext"
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "detachments",
+  "info": {
+    "singularName": "detachment",
+    "pluralName": "detachments",
+    "displayName": "Detachment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "faction": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::faction.faction",
+      "inversedBy": "detachments"
+    },
+    "ruleName": {
+      "type": "string",
+      "required": true
+    },
+    "ruleFlavour": {
+      "type": "richtext"
+    },
+    "ruleDescription": {
+      "type": "richtext",
+      "required": true
+    },
+    "stratagem_bundle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::stratagem-list.stratagem-list",
+      "inversedBy": "detachment"
+    },
+    "enhancements": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::enhancement.enhancement",
+      "mappedBy": "detachment"
+    }
+  }
+}

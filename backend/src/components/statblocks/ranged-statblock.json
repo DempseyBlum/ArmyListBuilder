@@ -1,0 +1,53 @@
+{
+  "collectionName": "ranged_statblocks",
+  "info": {
+    "displayName": "ranged weapon statblock",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name_for_ordering": {
+      "type": "string",
+      "required": true
+    },
+    "display_name_override": {
+      "type": "string"
+    },
+    "weapon_keywords": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::weapon-keyword.weapon-keyword"
+    },
+    "range": {
+      "type": "integer",
+      "min": 0,
+      "required": true
+    },
+    "attacks": {
+      "type": "string",
+      "regex": "^[0-9D+\\-]+$",
+      "required": true
+    },
+    "skill": {
+      "type": "integer",
+      "min": 2,
+      "max": 6,
+      "required": true
+    },
+    "strength": {
+      "type": "string",
+      "regex": "^[0-9D+\\-]+$",
+      "required": true
+    },
+    "penetration": {
+      "type": "string",
+      "regex": "^[0-9D+\\-]+$",
+      "required": true
+    },
+    "damage": {
+      "type": "string",
+      "regex": "^[0-9D+\\-]+$",
+      "required": true
+    }
+  }
+}

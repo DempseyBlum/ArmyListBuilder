@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wargears",
+  "info": {
+    "singularName": "wargear",
+    "pluralName": "wargears",
+    "displayName": "wargear",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "display_name": {
+      "type": "string",
+      "required": true
+    },
+    "ability": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

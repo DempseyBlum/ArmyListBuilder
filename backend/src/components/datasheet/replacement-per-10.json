@@ -1,0 +1,41 @@
+{
+  "collectionName": "per_10s",
+  "info": {
+    "displayName": "for every 10 models",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "model": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::model.model"
+    },
+    "weapons_to_replace": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::weapon.weapon"
+    },
+    "wargear_to_replaces": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::wargear.wargear"
+    },
+    "max_models_that_can_do_this": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 1
+    },
+    "can_select_duplicates": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "options": {
+      "type": "component",
+      "repeatable": true,
+      "component": "datasheet.weapon-option-replacement"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stratagem_lists",
+  "info": {
+    "singularName": "stratagem-list",
+    "pluralName": "stratagem-lists",
+    "displayName": "Stratagem Bundles",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "stratagem": {
+      "type": "component",
+      "repeatable": true,
+      "component": "detachment.stratagem",
+      "required": true
+    },
+    "detachment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::detachment.detachment",
+      "mappedBy": "stratagem_bundle"
+    }
+  }
+}

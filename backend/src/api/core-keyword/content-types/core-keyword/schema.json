@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "core_keywords",
+  "info": {
+    "singularName": "core-keyword",
+    "pluralName": "core-keywords",
+    "displayName": "Core Keyword",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "datasheets": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::unit-datasheet.unit-datasheet",
+      "mappedBy": "core_keywords"
+    }
+  }
+}

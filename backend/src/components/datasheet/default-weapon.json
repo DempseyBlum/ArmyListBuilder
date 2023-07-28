@@ -1,0 +1,25 @@
+{
+  "collectionName": "default_weapons",
+  "info": {
+    "displayName": "Default weapon",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name_for_ordering": {
+      "type": "string",
+      "required": true
+    },
+    "weapon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::weapon.weapon"
+    },
+    "points": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
+    }
+  }
+}

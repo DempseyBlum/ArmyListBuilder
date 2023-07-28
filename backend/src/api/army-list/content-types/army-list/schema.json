@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "army_lists",
+  "info": {
+    "singularName": "army-list",
+    "pluralName": "army-lists",
+    "displayName": "army list",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "display_name": {
+      "type": "string",
+      "required": true
+    },
+    "detachments": {
+      "type": "component",
+      "repeatable": true,
+      "component": "army-list.filled-detachment"
+    }
+  }
+}

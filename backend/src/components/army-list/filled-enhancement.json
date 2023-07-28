@@ -1,0 +1,19 @@
+{
+  "collectionName": "filled_enhancements",
+  "info": {
+    "displayName": "filled enhancement"
+  },
+  "options": {},
+  "attributes": {
+    "enhancement": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::enhancement.enhancement"
+    },
+    "datasheet": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::unit-datasheet.unit-datasheet"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "detachment_enhancements",
+  "info": {
+    "displayName": "enhancements"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "flavour": {
+      "type": "richtext",
+      "required": false
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

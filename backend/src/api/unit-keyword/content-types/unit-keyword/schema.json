@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "unit_keywords",
+  "info": {
+    "singularName": "unit-keyword",
+    "pluralName": "unit-keywords",
+    "displayName": "Unit Keyword"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "datasheets": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::unit-datasheet.unit-datasheet",
+      "mappedBy": "unit_keywords"
+    },
+    "models": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::model.model",
+      "mappedBy": "unit_keywords"
+    }
+  }
+}

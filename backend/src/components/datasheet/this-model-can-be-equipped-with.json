@@ -1,0 +1,23 @@
+{
+  "collectionName": "model_can_be_equipped",
+  "info": {
+    "displayName": "This model can be equipped with"
+  },
+  "options": {},
+  "attributes": {
+    "model": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::model.model"
+    },
+    "number": {
+      "type": "integer",
+      "required": true
+    },
+    "options": {
+      "type": "component",
+      "repeatable": true,
+      "component": "datasheet.weapon-option-replacement"
+    }
+  }
+}

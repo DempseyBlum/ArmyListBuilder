@@ -1,0 +1,19 @@
+{
+  "collectionName": "unit_compositions",
+  "info": {
+    "displayName": "unit composition option",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "model": {
+      "type": "component",
+      "repeatable": true,
+      "component": "datasheet.unit-composition-option-model"
+    },
+    "name_for_ordering": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "factions",
+  "info": {
+    "singularName": "faction",
+    "pluralName": "factions",
+    "displayName": "Faction",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "detachments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::detachment.detachment",
+      "mappedBy": "faction"
+    },
+    "ruleName": {
+      "type": "string",
+      "required": true
+    },
+    "ruleDescription": {
+      "type": "richtext",
+      "required": true
+    },
+    "extraRuleName": {
+      "type": "string"
+    },
+    "extraRuleDescription": {
+      "type": "richtext"
+    },
+    "datasheets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::unit-datasheet.unit-datasheet",
+      "mappedBy": "faction"
+    }
+  }
+}

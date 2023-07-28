@@ -1,0 +1,73 @@
+{
+  "kind": "collectionType",
+  "collectionName": "models",
+  "info": {
+    "singularName": "model",
+    "pluralName": "models",
+    "displayName": "model",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "display_name": {
+      "type": "string",
+      "required": true
+    },
+    "unit_keywords": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::unit-keyword.unit-keyword",
+      "inversedBy": "models"
+    },
+    "movement": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "toughness": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "save": {
+      "type": "integer",
+      "required": true,
+      "min": 2,
+      "max": 7
+    },
+    "wounds": {
+      "type": "integer",
+      "min": 1,
+      "required": true
+    },
+    "leadership": {
+      "type": "integer",
+      "min": 1,
+      "max": 13,
+      "required": true
+    },
+    "objective_control": {
+      "type": "integer",
+      "min": 0,
+      "required": true
+    },
+    "invul_save": {
+      "min": 1,
+      "max": 7,
+      "type": "integer"
+    },
+    "default_wargear": {
+      "type": "dynamiczone",
+      "components": ["datasheet.wargear-option", "datasheet.default-weapon"],
+      "required": true,
+      "min": 1
+    }
+  }
+}

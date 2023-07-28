@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "weapon_keywords",
+  "info": {
+    "singularName": "weapon-keyword",
+    "pluralName": "weapon-keywords",
+    "displayName": "Weapon Keyword"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}
