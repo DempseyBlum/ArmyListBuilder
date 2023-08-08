@@ -1,0 +1,36 @@
+{
+  "name": "armylistbuilder",
+  "version": "1.0.0",
+  "description": "My attempt at create a more feature complete versionon of the official 40k army builder.",
+  "main": "index.js",
+  "scripts": {
+    "develop": "next dev -p 3001",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/plugin-transform-runtime": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "@types/react": "18.2.15",
+    "babel-loader": "^9.1.3",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.17",
+    "@types/css-modules": "^1.0.2",
+    "graphql": "^16.7.1",
+    "i18n": "^0.15.1",
+    "next": "^13.4.11",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.2",
+    "sass": "^1.64.2",
+    "yarn": "^1.22.19"
+  }
+}
