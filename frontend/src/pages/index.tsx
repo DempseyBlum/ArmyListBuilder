@@ -7,13 +7,13 @@ import Homepage from "./homepage";
 // initialize apollo client
 const client = new ApolloClient({
   uri:
-    process.env.REACT_APP_PUBLIC_STRAPI_API_URL ||
+    process.env.NEXT_PUBLIC_STRAPI_API_URL ||
     "http://localhost:1337" + "/graphql",
   cache: new InMemoryCache(),
 });
 
 function App() {
-  console.log("TEST: ", process.env.REACT_APP_PUBLIC_STRAPI_API_URL);
+  console.log("TEST: ", process.env.NEXT_PUBLIC_STRAPI_API_URL);
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
