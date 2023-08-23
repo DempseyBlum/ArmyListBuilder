@@ -1,8 +1,9 @@
 // ./frontend/src/app/[lang]/utils/api-helpers.ts
 
 export function getStrapiURL(path = "") {
+  console.log("path", process.env.REACT_APP_PUBLIC_STRAPI_API_URL);
   return `${
-    process.env.PUBLIC_STRAPI_API_URL || "http://localhost:1337"
+    process.env.REACT_APP_PUBLIC_STRAPI_API_URL || "http://localhost:1337"
   }${path}`;
 }
 
