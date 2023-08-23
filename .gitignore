@@ -1,5 +1,3 @@
 node_modules
-# Next build dir
-.next/
-
-/.next/
+.env
+.next
