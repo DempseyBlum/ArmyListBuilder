@@ -24,6 +24,12 @@
       "type": "component",
       "repeatable": true,
       "component": "army-list.filled-detachment"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "army_lists"
     }
   }
 }
