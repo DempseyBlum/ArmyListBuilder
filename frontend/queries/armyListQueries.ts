@@ -35,11 +35,18 @@ export const armyListByIDQuery = gql`
 // Need to check how to actually filter on users
 export const armyListByUserQuery = gql`
   query GetArmyListByUser($userID: ID!) {
-    coreKeywords (filter: { user: { id: { eq: $userID } } })
-      data {
-        id
-        attributes {
-          name
+    coreKeywords(filter: { user: { id: { eq: $userID } } })
+    data {
+      id
+      attributes {
+        name
+        user {
+          data {
+            id
+            attributes {
+              name
+            }
+          }
         }
       }
     }
