@@ -28,17 +28,6 @@ export default function HomePage() {
     variables: {},
   });
 
-  // Data testing
-  useEffect(() => {
-    if (!loading && !error) {
-      console.log("data: ", data);
-    } else if (error) {
-      console.log("error: ", error);
-    } else {
-      console.log("loading...");
-    }
-  }, [loading, error, data]);
-
   return (
     <div>
       <ul>
