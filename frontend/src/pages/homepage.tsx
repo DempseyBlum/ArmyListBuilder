@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
   DetachmentsReturnType,
-  datasheetQuery,
+  allDatachmentsQuery,
 } from "../../queries/detachmentQueries";
 import { useStrapiQuery } from "../../hooks/useStrapiQuery";
 // Not being used, but decent format for pagination in the future.
@@ -24,7 +24,7 @@ export default function HomePage() {
     loading: boolean;
     error?: any;
     data: DetachmentsReturnType | undefined;
-  } = useStrapiQuery(datasheetQuery, {
+  } = useStrapiQuery(allDatachmentsQuery, {
     variables: {},
   });
 
