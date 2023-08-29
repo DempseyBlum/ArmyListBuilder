@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  DetachmentsReturnType,
+  AllDetachmentsReturnType,
   allDatachmentsQuery,
 } from "../../queries/detachmentQueries";
 import { useStrapiQuery } from "../../hooks/useStrapiQuery";
+import {
+  AllFactionsReturnType,
+  allFactionsQuery,
+} from "../../queries/factionQueries";
 // Not being used, but decent format for pagination in the future.
 interface Meta {
   pagination: {
@@ -23,8 +27,8 @@ export default function HomePage() {
   }: {
     loading: boolean;
     error?: any;
-    data: DetachmentsReturnType | undefined;
-  } = useStrapiQuery(allDatachmentsQuery, {
+    data: AllFactionsReturnType | undefined;
+  } = useStrapiQuery(allFactionsQuery, {
     variables: {},
   });
 
@@ -32,8 +36,8 @@ export default function HomePage() {
     <div>
       <ul>
         {data ? (
-          data.detachments.data.map((detachment) => (
-            <li key="{detachment}">{detachment.attributes.name}</li>
+          data.factions.data.map((detachment) => (
+            <li key="{detachment}">{detachment.attributes.display_name}</li>
           ))
         ) : (
           <div>Couldn't find data</div>

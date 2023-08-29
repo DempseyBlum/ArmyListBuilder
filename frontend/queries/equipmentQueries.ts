@@ -1,9 +1,10 @@
 import { gql } from "@apollo/client";
 
-interface Wargear {
+export interface Wargear {
   id: string;
   attributes: {
-    name: string;
+    display_name: string;
+    ability: string;
   };
 }
 
@@ -25,7 +26,8 @@ export const allWargearQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
+          ability
         }
       }
     }
@@ -38,23 +40,64 @@ export const wargearByIDQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
+          ability
         }
       }
     }
   }
 `;
 
-interface Weapon {
+interface WeaponSimplified {
   id: string;
   attributes: {
-    name: string;
+    display_name: string;
+  };
+}
+
+export interface Weapon {
+  id: string;
+  attributes: {
+    display_name: string;
+    ranged_weapon_stats: {
+      display_name_override: string;
+      weapon_keywords: {
+        data: {
+          id: string;
+          attributes: {
+            display_name: string;
+          };
+        };
+      };
+      range: number;
+      skill: number;
+      attacks: string;
+      penetration: string;
+      strength: string;
+      damage: string;
+    };
+    melee_weapon_stats: {
+      display_name_override: string;
+      weapon_keywords: {
+        data: {
+          id: string;
+          attributes: {
+            display_name: string;
+          };
+        };
+      };
+      attacks: string;
+      skill: number;
+      strength: string;
+      penetration: string;
+      damage: string;
+    };
   };
 }
 
 export interface WeaponReturnType {
   weapons: {
-    data: Weapon[];
+    data: WeaponSimplified[];
   };
 }
 
@@ -70,7 +113,7 @@ export const allWeaponsQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
         }
       }
     }
@@ -83,7 +126,40 @@ export const weaponByIDQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
+          ranged_weapon_stats {
+            display_name_override
+            weapon_keywords {
+              data {
+                id
+                attributes {
+                  display_name
+                }
+              }
+            }
+            range
+            skill
+            attacks
+            penetration
+            strength
+            damage
+          }
+          melee_weapon_stats {
+            display_name_override
+            weapon_keywords {
+              data {
+                id
+                attributes {
+                  display_name
+                }
+              }
+            }
+            attacks
+            skill
+            strength
+            penetration
+            damage
+          }
         }
       }
     }

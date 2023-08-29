@@ -1,14 +1,50 @@
 import { gql } from "@apollo/client";
+import { Wargear, Weapon } from "./equipmentQueries";
 
-interface Datasheet {
+interface DatasheetSimplified {
   id: string;
   attributes: {
-    name: string;
+    display_name;
     core_keywords: {
       data: {
         id: string;
         attributes: {
-          name: string;
+          display_name: string;
+        };
+      };
+    };
+    unit_keywords: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    faction: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    points_costs: {
+      model_count: number;
+      points: number;
+    };
+  };
+}
+
+interface Datasheet {
+  id: string;
+  attributes: {
+    display_name: string;
+    core_keywords: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
         };
       }[];
     };
@@ -16,7 +52,7 @@ interface Datasheet {
       data: {
         id: string;
         attributes: {
-          name: string;
+          display_name: string;
         };
       }[];
     };
@@ -24,13 +60,13 @@ interface Datasheet {
       data: {
         id: string;
         attributes: {
-          name: string;
+          display_name: string;
         };
       };
     };
     has_faction_ability: boolean;
     abilities: {
-      name: string;
+      display_name: string;
       description: string;
     }[];
     points_costs: {
@@ -43,7 +79,7 @@ interface Datasheet {
           data: {
             id: string;
             attributes: {
-              name: string;
+              display_name: string;
             };
           };
         };
@@ -56,7 +92,7 @@ interface Datasheet {
         data: {
           id: string;
           attributes: {
-            name: string;
+            display_name: string;
           };
         };
       };
@@ -64,7 +100,7 @@ interface Datasheet {
         data: {
           id: string;
           attributes: {
-            name: string;
+            display_name: string;
           };
         }[];
       };
@@ -72,7 +108,7 @@ interface Datasheet {
         data: {
           id: string;
           attributes: {
-            name: string;
+            display_name: string;
           };
         }[];
       };
@@ -80,21 +116,11 @@ interface Datasheet {
       can_select_duplicates: boolean;
       options: {
         weapon_options: {
-          data: {
-            id: string;
-            attributes: {
-              name: string;
-            };
-          };
+          data: Weapon;
         }[];
         points: number;
         wargear_options: {
-          data: {
-            id: string;
-            attributes: {
-              name: string;
-            };
-          };
+          data: Wargear;
         }[];
         restrict_duplicates: boolean;
       }[];
@@ -104,7 +130,7 @@ interface Datasheet {
 
 export interface DatasheetsReturnType {
   unitDatasheets: {
-    data: Datasheet[];
+    data: DatasheetSimplified[];
   };
 }
 
@@ -120,12 +146,12 @@ export const allDatasheetsQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
           core_keywords {
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
           }
@@ -133,7 +159,7 @@ export const allDatasheetsQuery = gql`
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
           }
@@ -141,80 +167,13 @@ export const allDatasheetsQuery = gql`
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
-          }
-          has_faction_ability
-          abilities {
-            name
-            description
           }
           points_costs {
             model_count
             points
-          }
-          unit_composition_options {
-            model {
-              model {
-                data {
-                  id
-                  attributes {
-                    name
-                  }
-                }
-              }
-              min
-              max
-            }
-          }
-          wargear_options {
-            model {
-              data {
-                id
-                attributes {
-                  name
-                }
-              }
-            }
-            weapons_to_replace {
-              data {
-                id
-                attributes {
-                  name
-                }
-              }
-            }
-            wargear_to_replace {
-              data {
-                id
-                attributes {
-                  name
-                }
-              }
-            }
-            max_models_that_can_do_this
-            can_select_duplicates
-            options {
-              weapon_options {
-                data {
-                  id
-                  attributes {
-                    name
-                  }
-                }
-              }
-              points
-              wargear_options {
-                data {
-                  id
-                  attributes {
-                    name
-                  }
-                }
-              }
-              restrict_duplicates
-            }
           }
         }
       }
@@ -228,12 +187,12 @@ export const datasheetByIDQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
           core_keywords {
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
           }
@@ -241,7 +200,7 @@ export const datasheetByIDQuery = gql`
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
           }
@@ -249,13 +208,13 @@ export const datasheetByIDQuery = gql`
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
           }
           has_faction_ability
           abilities {
-            name
+            display_name
             description
           }
           points_costs {
@@ -268,7 +227,7 @@ export const datasheetByIDQuery = gql`
                 data {
                   id
                   attributes {
-                    name
+                    display_name
                   }
                 }
               }
@@ -281,7 +240,7 @@ export const datasheetByIDQuery = gql`
               data {
                 id
                 attributes {
-                  name
+                  display_name
                 }
               }
             }
@@ -289,7 +248,7 @@ export const datasheetByIDQuery = gql`
               data {
                 id
                 attributes {
-                  name
+                  display_name
                 }
               }
             }
@@ -297,7 +256,7 @@ export const datasheetByIDQuery = gql`
               data {
                 id
                 attributes {
-                  name
+                  display_name
                 }
               }
             }
@@ -308,7 +267,7 @@ export const datasheetByIDQuery = gql`
                 data {
                   id
                   attributes {
-                    name
+                    display_name
                   }
                 }
               }
@@ -317,7 +276,7 @@ export const datasheetByIDQuery = gql`
                 data {
                   id
                   attributes {
-                    name
+                    display_name
                   }
                 }
               }
@@ -330,19 +289,18 @@ export const datasheetByIDQuery = gql`
   }
 `;
 
-// Need to double check this one. Had copilot do this.
 export const factionDatasheetsQuery = gql`
   query GetFactionDatasheets($factionId: ID!) {
-    unitDatasheets(filter: { faction: { data: { id: { eq: $factionId } } } }) {
+    unitDatasheets(filters: { faction: { id: { eq: 1 } } }) {
       data {
         id
         attributes {
-          name
+          display_name
           core_keywords {
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
           }
@@ -350,7 +308,7 @@ export const factionDatasheetsQuery = gql`
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
           }
@@ -358,80 +316,13 @@ export const factionDatasheetsQuery = gql`
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
-          }
-          has_faction_ability
-          abilities {
-            name
-            description
           }
           points_costs {
             model_count
             points
-          }
-          unit_composition_options {
-            model {
-              model {
-                data {
-                  id
-                  attributes {
-                    name
-                  }
-                }
-              }
-              min
-              max
-            }
-          }
-          wargear_options {
-            model {
-              data {
-                id
-                attributes {
-                  name
-                }
-              }
-            }
-            weapons_to_replace {
-              data {
-                id
-                attributes {
-                  name
-                }
-              }
-            }
-            wargear_to_replace {
-              data {
-                id
-                attributes {
-                  name
-                }
-              }
-            }
-            max_models_that_can_do_this
-            can_select_duplicates
-            options {
-              weapon_options {
-                data {
-                  id
-                  attributes {
-                    name
-                  }
-                }
-              }
-              points
-              wargear_options {
-                data {
-                  id
-                  attributes {
-                    name
-                  }
-                }
-              }
-              restrict_duplicates
-            }
           }
         }
       }

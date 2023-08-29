@@ -1,16 +1,42 @@
 import { gql } from "@apollo/client";
 
-interface Faction {
+interface FactionSimplified {
   id: string;
   attributes: {
-    name: string;
-    description: string;
+    display_name: string;
+    detachments: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      }[];
+    };
   };
 }
 
-export interface FactionsReturnType {
+interface Faction {
+  id: string;
+  attributes: {
+    display_name: string;
+    detachments: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      }[];
+    };
+    ruleName: string;
+    ruleDescription: string;
+    extraRuleName: string;
+    extraRuleDescription: string;
+  };
+}
+
+export interface AllFactionsReturnType {
   factions: {
-    data: Faction[];
+    data: FactionSimplified[];
   };
 }
 
@@ -26,7 +52,15 @@ export const allFactionsQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
+          detachments {
+            data {
+              id
+              attributes {
+                display_name
+              }
+            }
+          }
         }
       }
     }
@@ -39,7 +73,19 @@ export const factionByIDQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
+          detachments {
+            data {
+              id
+              attributes {
+                display_name
+              }
+            }
+          }
+          ruleName
+          ruleDescription
+          extraRuleName
+          extraRuleDescription
         }
       }
     }

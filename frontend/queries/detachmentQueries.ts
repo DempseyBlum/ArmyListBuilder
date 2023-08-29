@@ -1,14 +1,29 @@
 import { gql } from "@apollo/client";
 
-interface Detachment {
+interface DetachmentSimplified {
   id: string;
   attributes: {
-    name: string;
+    display_name: string;
     faction: {
       data: {
         id: string;
         attributes: {
-          name: string;
+          display_name: string;
+        };
+      };
+    };
+  };
+}
+
+interface Detachment {
+  id: string;
+  attributes: {
+    display_name: string;
+    faction: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
         };
       };
     };
@@ -20,6 +35,15 @@ interface Detachment {
         id: string;
         attributes: {
           name: string;
+          stratagem: {
+            display_name: string;
+            cost: number;
+            type: string;
+            when: string;
+            target: string;
+            effect: string;
+            restrictions: string;
+          };
         };
       };
     };
@@ -27,17 +51,18 @@ interface Detachment {
       data: {
         id: string;
         attributes: {
-          name: string;
+          display_name: string;
           description: string;
+          flavour: string;
         };
-      }[];
+      };
     };
   };
 }
 
-export interface DetachmentsReturnType {
+export interface AllDetachmentsReturnType {
   detachments: {
-    data: Detachment[];
+    data: DetachmentSimplified[];
   };
 }
 
@@ -53,32 +78,12 @@ export const allDatachmentsQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
           faction {
             data {
               id
               attributes {
-                name
-              }
-            }
-          }
-          ruleDescription
-          ruleFlavour
-          ruleName
-          stratagem_bundle {
-            data {
-              id
-              attributes {
-                name
-              }
-            }
-          }
-          enhancements {
-            data {
-              id
-              attributes {
-                name
-                description
+                display_name
               }
             }
           }
@@ -90,16 +95,16 @@ export const allDatachmentsQuery = gql`
 
 export const detachmentByIDQuery = gql`
   query GetDetachment($detachmentID: ID!) {
-    detachments(id: $detachmentID) {
+    detachment(id: $detachmentID) {
       data {
         id
         attributes {
-          name
+          display_name
           faction {
             data {
               id
               attributes {
-                name
+                display_name
               }
             }
           }
@@ -111,6 +116,16 @@ export const detachmentByIDQuery = gql`
               id
               attributes {
                 name
+                stratagem {
+                  display_name
+                  cost
+                  type
+                  when
+                  target
+                  effect
+                  restrictions
+                  display_name
+                }
               }
             }
           }
@@ -118,8 +133,9 @@ export const detachmentByIDQuery = gql`
             data {
               id
               attributes {
-                name
+                display_name
                 description
+                flavour
               }
             }
           }
@@ -149,8 +165,9 @@ export const enhancementByIDQuery = gql`
       data {
         id
         attributes {
-          name
+          display_name
           description
+          flavour
         }
       }
     }
@@ -159,6 +176,7 @@ export const enhancementByIDQuery = gql`
 
 interface StratagemBundle {
   id: string;
+  display_name;
   attributes: {
     name: string;
   };
@@ -177,7 +195,15 @@ export const stratagemByIDQuery = gql`
         id
         attributes {
           name
-          description
+          stratagem {
+            display_name
+            cost
+            type
+            when
+            target
+            effect
+            restrictions
+          }
         }
       }
     }

@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 interface CoreKeyword {
   id: string;
   attributes: {
-    name: string;
+    display_name: string;
     description: string;
   };
 }
@@ -14,13 +14,33 @@ export interface CoreKeywordsReturnType {
   };
 }
 
+export interface SingleCoreKeywordReturnType {
+  coreKeyword: {
+    data: CoreKeyword;
+  };
+}
+
 export const coreKeywordQuery = gql`
   query GetAllCoreKeywords {
     coreKeywords {
       data {
         id
         attributes {
-          name
+          display_name
+          description
+        }
+      }
+    }
+  }
+`;
+
+export const coreKeywordByIDQuery = gql`
+  query GetCoreKeywordByID($coreKeywordID: ID!) {
+    coreKeyword(id: $coreKeywordID) {
+      data {
+        id
+        attributes {
+          display_name
           description
         }
       }
@@ -30,7 +50,9 @@ export const coreKeywordQuery = gql`
 
 interface UnitKeyword {
   id: string;
-  attributes: {};
+  attributes: {
+    display_name: string;
+  };
 }
 
 export interface UnitKeywordsReturnType {
@@ -39,13 +61,33 @@ export interface UnitKeywordsReturnType {
   };
 }
 
+export interface SingleUnitKeywordReturnType {
+  unitKeyword: {
+    data: UnitKeyword;
+  };
+}
+
 export const unitKeywordQuery = gql`
-  query GetAllCoreKeywords {
+  query GetAllUnitKeywords {
     coreKeywords {
       data {
         id
         attributes {
-          name
+          display_name
+        }
+      }
+    }
+  }
+`;
+
+export const unitKeywordByIDQuery = gql`
+  query GetUnitKeywordByID($unitKeywordID: ID!) {
+    unitKeyword(id: $unitKeywordID) {
+      data {
+        id
+        attributes {
+          display_name
+          description
         }
       }
     }
@@ -55,7 +97,7 @@ export const unitKeywordQuery = gql`
 interface WeaponKeyword {
   id: string;
   attributes: {
-    name: string;
+    display_name: string;
     description: string;
   };
 }
@@ -66,13 +108,33 @@ export interface WeaponKeywordsReturnType {
   };
 }
 
+export interface SingleWeaponKeywordReturnType {
+  weaponKeyword: {
+    data: WeaponKeyword;
+  };
+}
+
 export const weaponKeywordQuery = gql`
   query GetAllWeaponKeywords {
     weaponKeywords {
       data {
         id
         attributes {
-          name
+          display_name
+          description
+        }
+      }
+    }
+  }
+`;
+
+export const weaponKeywordByIDQuery = gql`
+  query GetWeaponKeywordByID($weaponKeywordID: ID!) {
+    weaponKeyword(id: $weaponKeywordID) {
+      data {
+        id
+        attributes {
+          display_name
           description
         }
       }
