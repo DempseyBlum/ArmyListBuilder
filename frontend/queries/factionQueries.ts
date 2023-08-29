@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { Detachment } from "./detachmentQueries";
 
 interface FactionSimplified {
   id: string;
@@ -33,14 +34,13 @@ interface Faction {
     extraRuleDescription: string;
   };
 }
-
 export interface AllFactionsReturnType {
   factions: {
     data: FactionSimplified[];
   };
 }
 
-export interface SingleFactionReturnType {
+export interface FactionReturnType {
   faction: {
     data: Faction;
   };

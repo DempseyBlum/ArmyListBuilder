@@ -15,7 +15,7 @@ interface DetachmentSimplified {
   };
 }
 
-interface Detachment {
+export interface Detachment {
   id: string;
   attributes: {
     display_name: string;
@@ -43,7 +43,7 @@ interface Detachment {
             target: string;
             effect: string;
             restrictions: string;
-          };
+          }[];
         };
       };
     };
@@ -55,7 +55,7 @@ interface Detachment {
           description: string;
           flavour: string;
         };
-      };
+      }[];
     };
   };
 }
