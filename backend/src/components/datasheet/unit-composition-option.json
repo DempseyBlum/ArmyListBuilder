@@ -6,7 +6,7 @@
   },
   "options": {},
   "attributes": {
-    "model": {
+    "models_in_unit": {
       "type": "component",
       "repeatable": true,
       "component": "datasheet.unit-composition-option-model"

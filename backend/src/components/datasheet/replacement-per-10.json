@@ -16,7 +16,7 @@
       "relation": "oneToMany",
       "target": "api::weapon.weapon"
     },
-    "wargear_to_replaces": {
+    "wargear_to_replace": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::wargear.wargear"
