@@ -76,7 +76,7 @@ interface Datasheet {
       points: number;
     }[];
     unit_composition_options: {
-      model: {
+      models_in_unit: {
         model: {
           data: {
             id: string;
@@ -553,7 +553,7 @@ export const datasheetByIDQuery = gql`
             points
           }
           unit_composition_options {
-            model {
+            models_in_unit {
               model {
                 data {
                   id
