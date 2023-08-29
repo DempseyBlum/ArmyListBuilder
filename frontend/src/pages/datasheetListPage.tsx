@@ -7,10 +7,14 @@ import {
 } from "../../queries/factionQueries";
 import { Link, useParams } from "react-router-dom";
 import { OperationVariables } from "@apollo/client";
+import {
+  DatasheetsReturnType,
+  factionDatasheetsQuery,
+} from "../../queries/datasheetQueries";
 
-export default function FactionPage() {
+export default function DatasheetListPage() {
   useEffect(() => {
-    document.title = titleCreator("Faction");
+    document.title = titleCreator("Datasheet List");
   }, []);
 
   const { contentId } = useParams();
@@ -19,6 +23,20 @@ export default function FactionPage() {
     loading,
     error,
     data,
+  }: {
+    loading: boolean;
+    error?: any;
+    data: DatasheetsReturnType | undefined;
+  } = useStrapiQuery(factionDatasheetsQuery, {
+    variables: {
+      factionID: contentId,
+    },
+  } as OperationVariables);
+
+  const {
+    loading: factionLoadingq,
+    error: factionError,
+    data: factionData,
   }: {
     loading: boolean;
     error?: any;
@@ -31,23 +49,20 @@ export default function FactionPage() {
 
   return (
     <div>
-      {data ? (
+      {data && factionData ? (
         <>
-          <Link to={"/"}>
+          <Link to={"/faction/" + contentId}>
             <button>{"< "}Back</button>
           </Link>
-          <h1>{data.faction.data.attributes.display_name}</h1>
-          <h2>Detachments</h2>
+          <h1>{factionData.faction.data.attributes.display_name}</h1>
+          <h2>Units</h2>
           <ul>
-            {data.faction.data.attributes.detachments.data.map((detachment) => (
-              <Link to={"/detachment/" + detachment.id}>
-                <li key="{detachment}">{detachment.attributes.display_name}</li>
+            {data.unitDatasheets.data.map((unit) => (
+              <Link to={"/faction/" + contentId + "/unit/" + unit.id}>
+                <div key="{unit}">{unit.attributes.display_name}</div>
               </Link>
             ))}
           </ul>
-          <Link to={"faction_datasheets/"}>
-            <button>See Units</button>
-          </Link>
         </>
       ) : (
         <div>Loading...</div>

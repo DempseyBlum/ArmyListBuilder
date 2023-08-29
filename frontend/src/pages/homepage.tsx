@@ -52,7 +52,7 @@ export default function HomePage() {
             </Link>
           ))
         ) : (
-          <div>Couldn't find data</div>
+          <div>Loading...</div>
         )}
       </ul>
     </div>

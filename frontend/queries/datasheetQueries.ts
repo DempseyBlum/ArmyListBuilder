@@ -11,7 +11,7 @@ interface DatasheetSimplified {
         attributes: {
           display_name: string;
         };
-      };
+      }[];
     };
     unit_keywords: {
       data: {
@@ -19,7 +19,7 @@ interface DatasheetSimplified {
         attributes: {
           display_name: string;
         };
-      };
+      }[];
     };
     faction: {
       data: {
@@ -32,12 +32,12 @@ interface DatasheetSimplified {
     points_costs: {
       model_count: number;
       points: number;
-    };
+    }[];
   };
 }
 
 interface Datasheet {
-  id: string;
+  id;
   attributes: {
     display_name: string;
     core_keywords: {
@@ -61,12 +61,14 @@ interface Datasheet {
         id: string;
         attributes: {
           display_name: string;
+          ruleName: string;
+          ruleDescription: string;
         };
       };
     };
     has_faction_ability: boolean;
     abilities: {
-      display_name: string;
+      name: string;
       description: string;
     }[];
     points_costs: {
@@ -85,46 +87,334 @@ interface Datasheet {
         };
         min: number;
         max: number;
-      }[];
-    }[];
-    wargear_options: {
-      model: {
-        data: {
-          id: string;
-          attributes: {
-            display_name: string;
-          };
+      };
+    };
+    wargear_options: [
+      | ReplacementPer5
+      | ReplacementPer10
+      | ThisModelMayReplace
+      | NumberModelsMayReplace
+      | ReplacementForAnyNumber
+      | ReplacementForSingleModel
+      | ThisModelCanBeEquippedWith
+    ];
+  };
+}
+
+interface ReplacementPer5 {
+  model: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  wargear_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  weapons_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  max_models_that_can_do_this: number;
+  can_select_duplicates: boolean;
+  options: {
+    points: number;
+    weapon_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
         };
       };
-      weapons_to_replace: {
-        data: {
-          id: string;
-          attributes: {
-            display_name: string;
-          };
-        }[];
+    };
+    wargear_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
       };
-      wargear_to_replace: {
-        data: {
-          id: string;
-          attributes: {
-            display_name: string;
-          };
-        }[];
+    };
+    restrict_duplicates: boolean;
+  };
+}
+
+interface ReplacementPer10 {
+  model: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
       };
-      max_models_that_can_do_this: number;
-      can_select_duplicates: boolean;
-      options: {
-        weapon_options: {
-          data: Weapon;
-        }[];
-        points: number;
-        wargear_options: {
-          data: Wargear;
-        }[];
-        restrict_duplicates: boolean;
-      }[];
-    }[];
+    };
+  };
+  wargear_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  weapons_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  max_models_that_can_do_this: number;
+  can_select_duplicates: boolean;
+  options: {
+    points: number;
+    weapon_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    wargear_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    restrict_duplicates: boolean;
+  };
+}
+
+interface ThisModelMayReplace {
+  model: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  wargear_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  weapons_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  options: {
+    points: number;
+    weapon_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    wargear_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    restrict_duplicates: boolean;
+  };
+}
+
+interface NumberModelsMayReplace {
+  model: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  wargear_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  weapons_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  options: {
+    points: number;
+    weapon_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    wargear_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    restrict_duplicates: boolean;
+  };
+}
+
+interface ReplacementForAnyNumber {
+  models: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  wargear_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  weapons_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  options: {
+    points: number;
+    weapon_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    wargear_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    restrict_duplicates: boolean;
+  };
+}
+
+interface ReplacementForSingleModel {
+  model: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  wargear_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  weapons_to_replace: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  options: {
+    points: number;
+    weapon_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    wargear_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    restrict_duplicates: boolean;
+  };
+}
+
+interface ThisModelCanBeEquippedWith {
+  model: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
+  };
+  options: {
+    points: number;
+    weapon_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    wargear_options: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+    restrict_duplicates: boolean;
   };
 }
 
@@ -136,7 +426,7 @@ export interface DatasheetsReturnType {
 
 export interface SingleDatasheetReturnType {
   unitDatasheet: {
-    data: Datasheet[];
+    data: Datasheet;
   };
 }
 
@@ -182,8 +472,8 @@ export const allDatasheetsQuery = gql`
 `;
 
 export const datasheetByIDQuery = gql`
-  query GetAllDatasheets ($datasheetID: ID!)){
-    unitDatasheets (id: $datasheetID){
+  query GetAllDatasheets($datasheetID: ID!) {
+    unitDatasheet(id: $datasheetID) {
       data {
         id
         attributes {
@@ -209,12 +499,14 @@ export const datasheetByIDQuery = gql`
               id
               attributes {
                 display_name
+                ruleName
+                ruleDescription
               }
             }
           }
           has_faction_ability
           abilities {
-            display_name
+            name
             description
           }
           points_costs {
@@ -236,34 +528,8 @@ export const datasheetByIDQuery = gql`
             }
           }
           wargear_options {
-            model {
-              data {
-                id
-                attributes {
-                  display_name
-                }
-              }
-            }
-            weapons_to_replace {
-              data {
-                id
-                attributes {
-                  display_name
-                }
-              }
-            }
-            wargear_to_replace {
-              data {
-                id
-                attributes {
-                  display_name
-                }
-              }
-            }
-            max_models_that_can_do_this
-            can_select_duplicates
-            options {
-              weapon_options {
+            ... on ComponentDatasheetReplacementPer5 {
+              model {
                 data {
                   id
                   attributes {
@@ -271,8 +537,7 @@ export const datasheetByIDQuery = gql`
                   }
                 }
               }
-              points
-              wargear_options {
+              wargear_to_replace {
                 data {
                   id
                   attributes {
@@ -280,7 +545,298 @@ export const datasheetByIDQuery = gql`
                   }
                 }
               }
-              restrict_duplicates
+              weapons_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              max_models_that_can_do_this
+              can_select_duplicates
+              options {
+                points
+                weapon_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                wargear_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                restrict_duplicates
+              }
+            }
+            ... on ComponentDatasheetReplacementPer10 {
+              model {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              wargear_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              weapons_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              max_models_that_can_do_this
+              can_select_duplicates
+              options {
+                points
+                weapon_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                wargear_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                restrict_duplicates
+              }
+            }
+            ... on ComponentDatasheetThisModelMayReplace {
+              model {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              wargear_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              weapons_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              options {
+                points
+                weapon_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                wargear_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                restrict_duplicates
+              }
+            }
+            ... on ComponentDatasheetNumberModelsMayReplace {
+              model {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              wargear_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              weapons_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              options {
+                points
+                weapon_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                wargear_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                restrict_duplicates
+              }
+            }
+            ... on ComponentDatasheetReplacementForAnyNumber {
+              models {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              wargear_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              weapons_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              options {
+                points
+                weapon_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                wargear_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                restrict_duplicates
+              }
+            }
+            ... on ComponentDatasheetReplacementForSingleModel {
+              model {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              wargear_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              weapons_to_replace {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              options {
+                points
+                weapon_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                wargear_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                restrict_duplicates
+              }
+            }
+            ... on ComponentDatasheetThisModelCanBeEquippedWith {
+              model {
+                data {
+                  id
+                  attributes {
+                    display_name
+                  }
+                }
+              }
+              options {
+                points
+                weapon_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                wargear_options {
+                  data {
+                    id
+                    attributes {
+                      display_name
+                    }
+                  }
+                }
+                restrict_duplicates
+              }
             }
           }
         }
@@ -290,8 +846,8 @@ export const datasheetByIDQuery = gql`
 `;
 
 export const factionDatasheetsQuery = gql`
-  query GetFactionDatasheets($factionId: ID!) {
-    unitDatasheets(filters: { faction: { id: { eq: 1 } } }) {
+  query GetFactionDatasheets($factionID: ID!) {
+    unitDatasheets(filters: { faction: { id: { eq: $factionID } } }) {
       data {
         id
         attributes {

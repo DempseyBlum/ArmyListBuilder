@@ -5,6 +5,8 @@ import Header from "../components/header/header";
 import Homepage from "./homepage";
 import DetachmentPage from "./detachment";
 import FactionPage from "./faction";
+import DatasheetListPage from "./datasheetListPage";
+import DatasheetPage from "./datasheetPage";
 
 // initialize apollo client
 const client = new ApolloClient({
@@ -26,6 +28,14 @@ function App() {
               <Route
                 path="/detachment/:contentId"
                 element={<DetachmentPage />}
+              />
+              <Route
+                path="/faction/:contentId/faction_datasheets/"
+                element={<DatasheetListPage />}
+              />
+              <Route
+                path="/faction/:contentId/unit/:unitId"
+                element={<DatasheetPage />}
               />
             </Routes>
           </div>

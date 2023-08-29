@@ -11,6 +11,7 @@ import {
   detachmentByIDQuery,
 } from "../../queries/detachmentQueries";
 import { OperationVariables } from "@apollo/client";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 export default function DetachmentPage() {
   useEffect(() => {
@@ -47,7 +48,10 @@ export default function DetachmentPage() {
             {data.detachment.data.attributes.enhancements.data.map(
               (enhancement) => (
                 <li key="{enhancement}">
-                  {enhancement.attributes.display_name}
+                  {enhancement.attributes.display_name}:{" "}
+                  <ReactMarkdown>
+                    {enhancement.attributes.description}
+                  </ReactMarkdown>
                 </li>
               )
             )}
@@ -55,14 +59,33 @@ export default function DetachmentPage() {
           <h2>Stratagems</h2>
           <ul>
             {data.detachment.data.attributes.stratagem_bundle.data.attributes.stratagem.map(
-              (enhancement) => (
-                <li key="{enhancement}">{enhancement.display_name}</li>
+              (stratagem) => (
+                <li key="{enhancement}">
+                  {stratagem.display_name} [Cost: {stratagem.cost}CP]
+                  <div>
+                    When: <ReactMarkdown>{stratagem.when}</ReactMarkdown>
+                  </div>
+                  <div>
+                    Target: <ReactMarkdown>{stratagem.target}</ReactMarkdown>
+                  </div>
+                  <div>
+                    Effect:<ReactMarkdown>{stratagem.effect}</ReactMarkdown>{" "}
+                  </div>
+                  {stratagem.restrictions ? (
+                    <div>
+                      Restrictions:{" "}
+                      <ReactMarkdown>{stratagem.restrictions}</ReactMarkdown>{" "}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </li>
               )
             )}
           </ul>
         </>
       ) : (
-        <div>Couldn't find data</div>
+        <div>Loading...</div>
       )}
     </div>
   );
