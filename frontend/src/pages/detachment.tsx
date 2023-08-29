@@ -46,8 +46,8 @@ export default function DetachmentPage() {
           <h2>Enhancements</h2>
           <ul>
             {data.detachment.data.attributes.enhancements.data.map(
-              (enhancement) => (
-                <li key="{enhancement}">
+              (enhancement, i) => (
+                <li key={"enhancement" + i}>
                   {enhancement.attributes.display_name}:{" "}
                   <ReactMarkdown>
                     {enhancement.attributes.description}
@@ -59,8 +59,8 @@ export default function DetachmentPage() {
           <h2>Stratagems</h2>
           <ul>
             {data.detachment.data.attributes.stratagem_bundle.data.attributes.stratagem.map(
-              (stratagem) => (
-                <li key="{enhancement}">
+              (stratagem, i) => (
+                <li key={"stratagem" + i}>
                   {stratagem.display_name} [Cost: {stratagem.cost}CP]
                   <div>
                     When: <ReactMarkdown>{stratagem.when}</ReactMarkdown>

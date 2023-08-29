@@ -39,11 +39,15 @@ export default function FactionPage() {
           <h1>{data.faction.data.attributes.display_name}</h1>
           <h2>Detachments</h2>
           <ul>
-            {data.faction.data.attributes.detachments.data.map((detachment) => (
-              <Link to={"/detachment/" + detachment.id}>
-                <li key="{detachment}">{detachment.attributes.display_name}</li>
-              </Link>
-            ))}
+            {data.faction.data.attributes.detachments.data.map(
+              (detachment, i) => (
+                <Link to={"/detachment/" + detachment.id}>
+                  <li key={"detachment" + i}>
+                    {detachment.attributes.display_name}
+                  </li>
+                </Link>
+              )
+            )}
           </ul>
           <Link to={"faction_datasheets/"}>
             <button>See Units</button>

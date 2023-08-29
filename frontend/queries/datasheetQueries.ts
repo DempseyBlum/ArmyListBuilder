@@ -82,13 +82,29 @@ interface Datasheet {
             id: string;
             attributes: {
               display_name: string;
+              unit_keywords: {
+                data: {
+                  id: string;
+                  attributes: {
+                    display_name: string;
+                  };
+                };
+              };
+              movement: number;
+              toughness: number;
+              save: number;
+              wounds: number;
+              leadership: number;
+              objective_control: number;
+              invul_save: number;
+              default_wargear: [WargearOption | WeaponOption];
             };
           };
         };
         min: number;
         max: number;
-      };
-    };
+      }[];
+    }[];
     wargear_options: [
       | ReplacementPer5
       | ReplacementPer10
@@ -98,6 +114,29 @@ interface Datasheet {
       | ReplacementForSingleModel
       | ThisModelCanBeEquippedWith
     ];
+  };
+}
+
+interface WargearOption {
+  wargear: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+        ability: string;
+      };
+    };
+  };
+}
+
+interface WeaponOption {
+  weapon: {
+    data: {
+      id: string;
+      attributes: {
+        display_name: string;
+      };
+    };
   };
 }
 
@@ -520,6 +559,46 @@ export const datasheetByIDQuery = gql`
                   id
                   attributes {
                     display_name
+                    unit_keywords {
+                      data {
+                        id
+                        attributes {
+                          display_name
+                        }
+                      }
+                    }
+                    movement
+                    toughness
+                    save
+                    wounds
+                    leadership
+                    objective_control
+                    invul_save
+                    default_wargear {
+                      ... on ComponentDatasheetWargearOption {
+                        wargear {
+                          data {
+                            id
+                            attributes {
+                              display_name
+                              ability
+                            }
+                          }
+                        }
+                        points
+                      }
+                      ... on ComponentDatasheetDefaultWeapon {
+                        weapon {
+                          data {
+                            id
+                            attributes {
+                              display_name
+                            }
+                          }
+                        }
+                        points
+                      }
+                    }
                   }
                 }
               }

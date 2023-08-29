@@ -57,9 +57,9 @@ export default function DatasheetListPage() {
           <h1>{factionData.faction.data.attributes.display_name}</h1>
           <h2>Units</h2>
           <ul>
-            {data.unitDatasheets.data.map((unit) => (
+            {data.unitDatasheets.data.map((unit, i) => (
               <Link to={"/faction/" + contentId + "/unit/" + unit.id}>
-                <div key="{unit}">{unit.attributes.display_name}</div>
+                <div key={"unit" + i}>{unit.attributes.display_name}</div>
               </Link>
             ))}
           </ul>

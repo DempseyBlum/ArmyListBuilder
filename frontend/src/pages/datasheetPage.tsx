@@ -20,74 +20,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-type Person = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  status: string;
-  progress: number;
-};
-
-const columnHelper = createColumnHelper<Person>();
-
-const columns = [
-  columnHelper.accessor("firstName", {
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor((row) => row.lastName, {
-    id: "lastName",
-    cell: (info) => <i>{info.getValue()}</i>,
-    header: () => <span>Last Name</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("age", {
-    header: () => "Age",
-    cell: (info) => info.renderValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("visits", {
-    header: () => <span>Visits</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("status", {
-    header: "Status",
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("progress", {
-    header: "Profile Progress",
-    footer: (info) => info.column.id,
-  }),
-];
-
-const defaultData: Person[] = [
-  {
-    firstName: "tanner",
-    lastName: "linsley",
-    age: 24,
-    visits: 100,
-    status: "In Relationship",
-    progress: 50,
-  },
-  {
-    firstName: "tandy",
-    lastName: "miller",
-    age: 40,
-    visits: 40,
-    status: "Single",
-    progress: 80,
-  },
-  {
-    firstName: "joe",
-    lastName: "dirte",
-    age: 45,
-    visits: 20,
-    status: "Complicated",
-    progress: 10,
-  },
-];
-
 export default function DatasheetListPage() {
   useEffect(() => {
     document.title = titleCreator("Datasheet List");
@@ -98,7 +30,7 @@ export default function DatasheetListPage() {
   const {
     loading,
     error,
-    data: datasheetData,
+    data,
   }: {
     loading: boolean;
     error?: any;
@@ -109,38 +41,32 @@ export default function DatasheetListPage() {
     },
   } as OperationVariables);
 
-  const [data, setData] = React.useState(() => [...defaultData]);
-
-  // These tables will be for weapons, and stats.
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
+  // Need a good way to get all the stats of every model possible in the unit. Then display only the ones that have different stats.
+  // I also need a way to get all the weapon options, this includes default weapons from each model, and the weapon options for the datasheet.
 
   return (
     <div>
-      {datasheetData ? (
+      {data ? (
         <>
           <Link to={"/faction/" + contentId + "/faction_datasheets/"}>
             <button>{"< "}Back</button>
           </Link>
-          <h1>{datasheetData.unitDatasheet.data.attributes.display_name}</h1>
+          <h1>{data.unitDatasheet.data.attributes.display_name}</h1>
           <h2>Keywords</h2>
           <ul>
-            {datasheetData.unitDatasheet.data.attributes.core_keywords.data.map(
-              (keyword) => (
-                <li key="{keyword}">{keyword.attributes.display_name}</li>
+            {data.unitDatasheet.data.attributes.core_keywords.data.map(
+              (keyword, i) => (
+                <li key={"keyword" + i}>{keyword.attributes.display_name}</li>
               )
             )}
           </ul>
           <h2>Faction Ability</h2>
           <ul>
-            {datasheetData.unitDatasheet.data.attributes.has_faction_ability ? (
+            {data.unitDatasheet.data.attributes.has_faction_ability ? (
               <li>
                 {
-                  datasheetData.unitDatasheet.data.attributes.faction.data
-                    .attributes.ruleName
+                  data.unitDatasheet.data.attributes.faction.data.attributes
+                    .ruleName
                 }
               </li>
             ) : (
@@ -149,46 +75,66 @@ export default function DatasheetListPage() {
           </ul>
           <h2>Abilities</h2>
           <ul>
-            {datasheetData.unitDatasheet.data.attributes.abilities.map(
-              (ability) => (
-                <li key="{keyword}">
-                  {ability.name}: {ability.description}
-                </li>
-              )
-            )}
+            {data.unitDatasheet.data.attributes.abilities.map((ability, i) => (
+              <li key={"ability" + i}>
+                {ability.name}: {ability.description}
+              </li>
+            ))}
           </ul>
           <h2>Stats</h2>
           <div>
             <table>
               <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <th key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
+                <tr>
+                  <th>M</th>
+                  <th>T</th>
+                  <th>SV</th>
+                  <th>W</th>
+                  <th>LD</th>
+                  <th>OC</th>
+                </tr>
               </thead>
               <tbody>
-                {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                {data.unitDatasheet.data.attributes.unit_composition_options.map(
+                  (model) => {
+                    return (
+                      <tr>
+                        <td>{model.model[0].model.data.attributes.movement}</td>
+                        <td>
+                          {model.model[0].model.data.attributes.toughness}
+                        </td>
+                        <td>{model.model[0].model.data.attributes.save}</td>
+                        <td>{model.model[0].model.data.attributes.wounds}</td>
+                        <td>
+                          {model.model[0].model.data.attributes.leadership}
+                        </td>
+                        <td>
+                          {
+                            model.model[0].model.data.attributes
+                              .objective_control
+                          }
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
+              </tbody>
+            </table>
+          </div>
+          <h2>Weapons</h2>
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Test</th>
+                  <th>Test 2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Test</td>
+                  <td>Test 2</td>
+                </tr>
               </tbody>
             </table>
           </div>
