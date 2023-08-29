@@ -16,6 +16,10 @@
       "type": "string",
       "required": true
     },
+    "display_name": {
+      "type": "string",
+      "required": true
+    },
     "detachments": {
       "type": "relation",
       "relation": "oneToMany",

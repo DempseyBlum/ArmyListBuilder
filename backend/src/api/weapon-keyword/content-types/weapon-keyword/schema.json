@@ -4,7 +4,8 @@
   "info": {
     "singularName": "weapon-keyword",
     "pluralName": "weapon-keywords",
-    "displayName": "Weapon Keyword"
+    "displayName": "Weapon Keyword",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -12,6 +13,10 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
+      "type": "string",
+      "required": true
+    },
+    "display_name": {
       "type": "string",
       "required": true
     },

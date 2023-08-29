@@ -6,18 +6,13 @@
   },
   "options": {},
   "attributes": {
-    "name": {
+    "display_name": {
       "type": "string",
       "required": true
     },
     "type": {
       "type": "enumeration",
-      "enum": [
-        "Strategic Plot",
-        "Battle Tactic",
-        "Epic Deed",
-        "Wargear"
-      ]
+      "enum": ["Strategic Plot", "Battle Tactic", "Epic Deed", "Wargear"]
     },
     "when": {
       "type": "richtext",
