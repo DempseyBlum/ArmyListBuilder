@@ -67,7 +67,7 @@ export interface Weapon {
           attributes: {
             display_name: string;
           };
-        };
+        }[];
       };
       range: number;
       skill: number;
@@ -75,7 +75,7 @@ export interface Weapon {
       penetration: string;
       strength: string;
       damage: string;
-    };
+    }[];
     melee_weapon_stats: {
       display_name_override: string;
       weapon_keywords: {
@@ -84,14 +84,14 @@ export interface Weapon {
           attributes: {
             display_name: string;
           };
-        };
+        }[];
       };
       attacks: string;
       skill: number;
       strength: string;
       penetration: string;
       damage: string;
-    };
+    }[];
   };
 }
 

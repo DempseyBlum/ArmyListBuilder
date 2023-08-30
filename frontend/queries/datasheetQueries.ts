@@ -117,7 +117,7 @@ interface Datasheet {
   };
 }
 
-interface WargearOption {
+export interface WargearOption {
   wargear: {
     data: {
       id: string;
@@ -127,17 +127,14 @@ interface WargearOption {
       };
     };
   };
+  points: number;
 }
 
-interface WeaponOption {
+export interface WeaponOption {
   weapon: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: Weapon;
   };
+  points: number;
 }
 
 interface ReplacementPer5 {
@@ -593,6 +590,39 @@ export const datasheetByIDQuery = gql`
                             id
                             attributes {
                               display_name
+                              ranged_weapon_stats {
+                                display_name_override
+                                weapon_keywords {
+                                  data {
+                                    id
+                                    attributes {
+                                      display_name
+                                    }
+                                  }
+                                }
+                                range
+                                skill
+                                attacks
+                                penetration
+                                strength
+                                damage
+                              }
+                              melee_weapon_stats {
+                                display_name_override
+                                weapon_keywords {
+                                  data {
+                                    id
+                                    attributes {
+                                      display_name
+                                    }
+                                  }
+                                }
+                                attacks
+                                skill
+                                strength
+                                penetration
+                                damage
+                              }
                             }
                           }
                         }
