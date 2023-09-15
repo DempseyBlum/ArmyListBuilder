@@ -106,8 +106,7 @@ interface Datasheet {
       }[];
     }[];
     wargear_options: [
-      | ReplacementPer5
-      | ReplacementPer10
+      | ReplacementPer5or10
       | ThisModelMayReplace
       | NumberModelsMayReplace
       | ReplacementForAnyNumber
@@ -144,7 +143,7 @@ export interface SimplifiedOption {
   };
 }
 
-export interface ReplacementPer5 {
+export interface ReplacementPer5or10 {
   model: {
     data: {
       id: string;
@@ -161,35 +160,7 @@ export interface ReplacementPer5 {
   };
   max_models_that_can_do_this: number;
   can_select_duplicates: boolean;
-  options: {
-    points: number;
-    weapon_options: {
-      data: SimplifiedOption[];
-    };
-    wargear_options: {
-      data: SimplifiedOption[];
-    };
-    restrict_duplicates: boolean;
-  };
-}
-
-export interface ReplacementPer10 {
-  model: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
-  };
-  wargear_to_replace: {
-    data: SimplifiedOption[];
-  };
-  weapons_to_replace: {
-    data: SimplifiedOption[];
-  };
-  max_models_that_can_do_this: number;
-  can_select_duplicates: boolean;
+  number: number;
   options: {
     points: number;
     weapon_options: {
@@ -542,54 +513,7 @@ export const datasheetByIDQuery = gql`
               }
               max_models_that_can_do_this
               can_select_duplicates
-              options {
-                points
-                weapon_options {
-                  data {
-                    id
-                    attributes {
-                      display_name
-                    }
-                  }
-                }
-                wargear_options {
-                  data {
-                    id
-                    attributes {
-                      display_name
-                    }
-                  }
-                }
-                restrict_duplicates
-              }
-            }
-            ... on ComponentDatasheetReplacementPer10 {
-              model {
-                data {
-                  id
-                  attributes {
-                    display_name
-                  }
-                }
-              }
-              wargear_to_replace {
-                data {
-                  id
-                  attributes {
-                    display_name
-                  }
-                }
-              }
-              weapons_to_replace {
-                data {
-                  id
-                  attributes {
-                    display_name
-                  }
-                }
-              }
-              max_models_that_can_do_this
-              can_select_duplicates
+              number
               options {
                 points
                 weapon_options {

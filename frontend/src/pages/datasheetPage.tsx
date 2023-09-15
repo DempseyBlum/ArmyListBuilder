@@ -8,8 +8,7 @@ import {
   NumberModelsMayReplace,
   ReplacementForAnyNumber,
   ReplacementForSingleModel,
-  ReplacementPer10,
-  ReplacementPer5,
+  ReplacementPer5or10,
   SimplifiedOption,
   SingleDatasheetReturnType,
   ThisModelCanBeEquippedWith,
@@ -74,62 +73,45 @@ function isWeapon(
   return (component as WeaponOption).weapon !== undefined;
 }
 
-function isReplacementPer5(
+function isReplacementPer5or10(
   component:
-    | ReplacementPer5
-    | ReplacementPer10
+    | ReplacementPer5or10
     | ThisModelMayReplace
     | NumberModelsMayReplace
     | ReplacementForAnyNumber
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
-): component is ReplacementPer5 {
-  return (component as ReplacementPer5).options !== undefined;
-}
-
-function isReplacementPer10(
-  component:
-    | ReplacementPer5
-    | ReplacementPer10
-    | ThisModelMayReplace
-    | NumberModelsMayReplace
-    | ReplacementForAnyNumber
-    | ReplacementForSingleModel
-    | ThisModelCanBeEquippedWith
-): component is ReplacementPer10 {
-  return (component as ReplacementPer10).options !== undefined;
+): component is ReplacementPer5or10 {
+  return (component as ReplacementPer5or10).can_select_duplicates !== undefined;
 }
 
 function isThisModelMayReplace(
   component:
-    | ReplacementPer5
-    | ReplacementPer10
+    | ReplacementPer5or10
     | ThisModelMayReplace
     | NumberModelsMayReplace
     | ReplacementForAnyNumber
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
 ): component is ThisModelMayReplace {
-  return (component as ThisModelMayReplace).options !== undefined;
+  return (component as ThisModelMayReplace) !== undefined;
 }
 
 function isNumberModelsMayReplace(
   component:
-    | ReplacementPer5
-    | ReplacementPer10
+    | ReplacementPer5or10
     | ThisModelMayReplace
     | NumberModelsMayReplace
     | ReplacementForAnyNumber
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
 ): component is NumberModelsMayReplace {
-  return (component as NumberModelsMayReplace).options !== undefined;
+  return (component as NumberModelsMayReplace).number !== undefined;
 }
 
 function isReplacementForAnyNumber(
   component:
-    | ReplacementPer5
-    | ReplacementPer10
+    | ReplacementPer5or10
     | ThisModelMayReplace
     | NumberModelsMayReplace
     | ReplacementForAnyNumber
@@ -141,8 +123,7 @@ function isReplacementForAnyNumber(
 
 function isReplacementForSingleModel(
   component:
-    | ReplacementPer5
-    | ReplacementPer10
+    | ReplacementPer5or10
     | ThisModelMayReplace
     | NumberModelsMayReplace
     | ReplacementForAnyNumber
@@ -154,8 +135,7 @@ function isReplacementForSingleModel(
 
 function isThisModelCanBeEquippedWith(
   component:
-    | ReplacementPer5
-    | ReplacementPer10
+    | ReplacementPer5or10
     | ThisModelMayReplace
     | NumberModelsMayReplace
     | ReplacementForAnyNumber
@@ -564,37 +544,11 @@ export default function DatasheetListPage() {
               <div className={style.wargrearOptions}>
                 {data.unitDatasheet.data.attributes.wargear_options.map(
                   (option, i) => {
-                    if (isReplacementPer5(option)) {
+                    if (isReplacementPer5or10(option)) {
                       return (
                         <ul>
                           <li>
-                            For every 5 models in this unit,{" "}
-                            {option.max_models_that_can_do_this
-                              ? option.max_models_that_can_do_this
-                              : "any number of "}{" "}
-                            {option.model.data.attributes.display_name}'s{" "}
-                            {GetWargearOptionNames(
-                              option.weapons_to_replace.data,
-                              option.wargear_to_replace.data
-                            ).map((name, i, array) => {
-                              if ((i = 0)) {
-                                return name;
-                              } else if ((i = array.length - 1)) {
-                                return "and " + name;
-                              } else {
-                                return ", " + name;
-                              }
-                            })}{" "}
-                            can be replaced with one of the following:
-                          </li>
-                        </ul>
-                      );
-                    }
-                    if (isReplacementPer10(option)) {
-                      return (
-                        <ul>
-                          <li>
-                            For every 10 models in this unit,{" "}
+                            For every {option.number} models in this unit,{" "}
                             {option.max_models_that_can_do_this
                               ? option.max_models_that_can_do_this
                               : "any number of "}{" "}
