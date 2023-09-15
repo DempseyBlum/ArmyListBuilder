@@ -113,6 +113,13 @@ interface Datasheet {
       | ReplacementForSingleModel
       | ThisModelCanBeEquippedWith
     ];
+    lead_units_list: {
+      data: {
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
   };
 }
 
@@ -161,6 +168,7 @@ export interface ReplacementPer5or10 {
   max_models_that_can_do_this: number;
   can_select_duplicates: boolean;
   number: number;
+  forEvery5Models: string;
   options: {
     points: number;
     weapon_options: {
@@ -188,6 +196,7 @@ export interface ThisModelMayReplace {
   weapons_to_replace: {
     data: SimplifiedOption[];
   };
+  thisModelMayReplace: string;
   options: {
     points: number;
     weapon_options: {
@@ -216,6 +225,7 @@ export interface NumberModelsMayReplace {
   weapons_to_replace: {
     data: SimplifiedOption[];
   };
+  numberCanReplace: string;
   options: {
     points: number;
     weapon_options: {
@@ -243,6 +253,7 @@ export interface ReplacementForAnyNumber {
   weapons_to_replace: {
     data: SimplifiedOption[];
   };
+  anyNumberCanReplace: string;
   options: {
     points: number;
     weapon_options: {
@@ -270,6 +281,7 @@ export interface ReplacementForSingleModel {
   weapons_to_replace: {
     data: SimplifiedOption[];
   };
+  thisModelMayReplace: string;
   options: {
     points: number;
     weapon_options: {
@@ -291,6 +303,7 @@ export interface ThisModelCanBeEquippedWith {
       };
     };
   };
+  thisModelCanEquip: string;
   options: {
     points: number;
     weapon_options: {
@@ -514,6 +527,7 @@ export const datasheetByIDQuery = gql`
               max_models_that_can_do_this
               can_select_duplicates
               number
+              forEvery5Models
               options {
                 points
                 weapon_options {
@@ -560,6 +574,7 @@ export const datasheetByIDQuery = gql`
                   }
                 }
               }
+              thisModelMayReplace
               options {
                 points
                 weapon_options {
@@ -607,6 +622,7 @@ export const datasheetByIDQuery = gql`
                 }
               }
               number
+              numberCanReplace
               options {
                 points
                 weapon_options {
@@ -653,6 +669,7 @@ export const datasheetByIDQuery = gql`
                   }
                 }
               }
+              anyNumberCanReplace
               options {
                 points
                 weapon_options {
@@ -699,6 +716,7 @@ export const datasheetByIDQuery = gql`
                   }
                 }
               }
+              eachCanReplace
               options {
                 points
                 weapon_options {
@@ -729,6 +747,7 @@ export const datasheetByIDQuery = gql`
                   }
                 }
               }
+              thisModelCanEquip
               options {
                 points
                 weapon_options {
@@ -751,6 +770,7 @@ export const datasheetByIDQuery = gql`
               }
             }
           }
+          lead_units_list
         }
       }
     }

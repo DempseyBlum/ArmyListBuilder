@@ -82,7 +82,7 @@ function isReplacementPer5or10(
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
 ): component is ReplacementPer5or10 {
-  return (component as ReplacementPer5or10).can_select_duplicates !== undefined;
+  return (component as ReplacementPer5or10).forEvery5Models !== undefined;
 }
 
 function isThisModelMayReplace(
@@ -94,7 +94,7 @@ function isThisModelMayReplace(
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
 ): component is ThisModelMayReplace {
-  return (component as ThisModelMayReplace) !== undefined;
+  return (component as ThisModelMayReplace).thisModelMayReplace !== undefined;
 }
 
 function isNumberModelsMayReplace(
@@ -106,7 +106,7 @@ function isNumberModelsMayReplace(
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
 ): component is NumberModelsMayReplace {
-  return (component as NumberModelsMayReplace).number !== undefined;
+  return (component as NumberModelsMayReplace).numberCanReplace !== undefined;
 }
 
 function isReplacementForAnyNumber(
@@ -118,7 +118,9 @@ function isReplacementForAnyNumber(
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
 ): component is ReplacementForAnyNumber {
-  return (component as ReplacementForAnyNumber).models !== undefined;
+  return (
+    (component as ReplacementForAnyNumber).anyNumberCanReplace !== undefined
+  );
 }
 
 function isReplacementForSingleModel(
@@ -130,7 +132,9 @@ function isReplacementForSingleModel(
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
 ): component is ReplacementForSingleModel {
-  return (component as ReplacementForSingleModel).options !== undefined;
+  return (
+    (component as ReplacementForSingleModel).thisModelMayReplace !== undefined
+  );
 }
 
 function isThisModelCanBeEquippedWith(
@@ -142,7 +146,9 @@ function isThisModelCanBeEquippedWith(
     | ReplacementForSingleModel
     | ThisModelCanBeEquippedWith
 ): component is ThisModelCanBeEquippedWith {
-  return (component as ThisModelCanBeEquippedWith).options !== undefined;
+  return (
+    (component as ThisModelCanBeEquippedWith).thisModelCanEquip !== undefined
+  );
 }
 
 export default function DatasheetListPage() {
@@ -382,7 +388,7 @@ export default function DatasheetListPage() {
     if (missing.length > 0) {
       return names;
     }
-    return [];
+    return ["models"];
   }
 
   function CheckForMissingModelNames(names: string[]) {
@@ -538,9 +544,9 @@ export default function DatasheetListPage() {
               </tbody>
             </table>
           </div>
+          <h2>Wargear Options</h2>
           {data.unitDatasheet.data.attributes.wargear_options ? (
             <>
-              <h2>Wargear Options</h2>
               <div className={style.wargrearOptions}>
                 {data.unitDatasheet.data.attributes.wargear_options.map(
                   (option, i) => {
@@ -596,8 +602,7 @@ export default function DatasheetListPage() {
                       return (
                         <ul>
                           <li>
-                            Up to {option.number} models in this unit may
-                            replace their{" "}
+                            {option.number} model's may replace their{" "}
                             {option.model.data.attributes.display_name}'s{" "}
                             {GetWargearOptionNames(
                               option.weapons_to_replace.data,
@@ -623,19 +628,15 @@ export default function DatasheetListPage() {
                             Any number of{" "}
                             {GetAllModelNames(option.models.data).map(
                               (name, i, array) => {
-                                if (array.length === 0) {
-                                  return "models in this unit ";
+                                if ((i = 0)) {
+                                  return name;
+                                } else if ((i = array.length - 1)) {
+                                  return "and " + name;
                                 } else {
-                                  if ((i = 0)) {
-                                    return name;
-                                  } else if ((i = array.length - 1)) {
-                                    return "and " + name;
-                                  } else {
-                                    return ", " + name;
-                                  }
+                                  return ", " + name;
                                 }
                               }
-                            )}
+                            )}{" "}
                             can each have their
                             {GetWargearOptionNames(
                               option.weapons_to_replace.data,
@@ -691,7 +692,7 @@ export default function DatasheetListPage() {
               </div>
             </>
           ) : (
-            <></>
+            <div>None.</div>
           )}
         </>
       ) : (
