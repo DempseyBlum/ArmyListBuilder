@@ -137,7 +137,14 @@ export interface WeaponOption {
   points: number;
 }
 
-interface ReplacementPer5 {
+export interface SimplifiedOption {
+  id: string;
+  attributes: {
+    display_name: string;
+  };
+}
+
+export interface ReplacementPer5 {
   model: {
     data: {
       id: string;
@@ -147,46 +154,26 @@ interface ReplacementPer5 {
     };
   };
   wargear_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   weapons_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   max_models_that_can_do_this: number;
   can_select_duplicates: boolean;
   options: {
     points: number;
     weapon_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     wargear_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     restrict_duplicates: boolean;
   };
 }
 
-interface ReplacementPer10 {
+export interface ReplacementPer10 {
   model: {
     data: {
       id: string;
@@ -196,46 +183,26 @@ interface ReplacementPer10 {
     };
   };
   wargear_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   weapons_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   max_models_that_can_do_this: number;
   can_select_duplicates: boolean;
   options: {
     points: number;
     weapon_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     wargear_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     restrict_duplicates: boolean;
   };
 }
 
-interface ThisModelMayReplace {
+export interface ThisModelMayReplace {
   model: {
     data: {
       id: string;
@@ -245,44 +212,24 @@ interface ThisModelMayReplace {
     };
   };
   wargear_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   weapons_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   options: {
     points: number;
     weapon_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     wargear_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     restrict_duplicates: boolean;
   };
 }
 
-interface NumberModelsMayReplace {
+export interface NumberModelsMayReplace {
   model: {
     data: {
       id: string;
@@ -291,92 +238,53 @@ interface NumberModelsMayReplace {
       };
     };
   };
+  number: number;
   wargear_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   weapons_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   options: {
     points: number;
     weapon_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     wargear_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     restrict_duplicates: boolean;
   };
 }
 
-interface ReplacementForAnyNumber {
+export interface ReplacementForAnyNumber {
   models: {
     data: {
       id: string;
       attributes: {
         display_name: string;
       };
-    };
+    }[];
   };
   wargear_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   weapons_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   options: {
     points: number;
     weapon_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     wargear_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     restrict_duplicates: boolean;
   };
 }
 
-interface ReplacementForSingleModel {
+export interface ReplacementForSingleModel {
   model: {
     data: {
       id: string;
@@ -386,44 +294,24 @@ interface ReplacementForSingleModel {
     };
   };
   wargear_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   weapons_to_replace: {
-    data: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    };
+    data: SimplifiedOption[];
   };
   options: {
     points: number;
     weapon_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     wargear_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     restrict_duplicates: boolean;
   };
 }
 
-interface ThisModelCanBeEquippedWith {
+export interface ThisModelCanBeEquippedWith {
   model: {
     data: {
       id: string;
@@ -435,20 +323,10 @@ interface ThisModelCanBeEquippedWith {
   options: {
     points: number;
     weapon_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     wargear_options: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: SimplifiedOption[];
     };
     restrict_duplicates: boolean;
   };
@@ -804,6 +682,7 @@ export const datasheetByIDQuery = gql`
                   }
                 }
               }
+              number
               options {
                 points
                 weapon_options {
