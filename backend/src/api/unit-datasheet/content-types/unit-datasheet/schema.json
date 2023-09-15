@@ -63,7 +63,6 @@
     "wargear_options": {
       "type": "dynamiczone",
       "components": [
-        "datasheet.replacement-per-10",
         "datasheet.replacement-per-5",
         "datasheet.replacement-for-single-model",
         "datasheet.replacement-for-any-number",
@@ -71,6 +70,11 @@
         "datasheet.this-model-can-be-equipped-with",
         "datasheet.number-models-may-replace"
       ]
+    },
+    "lead_units_list": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::unit-datasheet.unit-datasheet"
     }
   }
 }

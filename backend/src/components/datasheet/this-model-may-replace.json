@@ -25,6 +25,11 @@
       "type": "component",
       "repeatable": true,
       "component": "datasheet.weapon-option-replacement"
+    },
+    "thisModelMayReplace": {
+      "type": "string",
+      "required": false,
+      "default": "ignore this"
     }
   }
 }
