@@ -1,0 +1,44 @@
+﻿Replace via equipment
+	-Any number of models can each have their lasguns may replaced with ___
+	-Up to 2 models can each have their ___ replaced with one of the following:
+
+Replace via model and equipment
+	-Any number of guardsman can 
+	-Up to 4 Kasirkin Troopers can each have have their hot-shot lasgun replaced with on eof 	the following:
+	-1 Kasrkin Trooper’s hot-shot lasgun can be replaced with 1 hot-shot laspistol and 1 
+	melta mine.
+
+
+Equip via nothing
+	-Any number of models can be equipped with up to two of the following, and can take 	duplicates
+
+Equip via model
+	-A guardsman sergeant can be equipped with 1 power saber
+
+Equip via equipment
+	-A model with a lasgun can take a voxcaster
+
+Equip via model and equipment 
+	- 1 Kasrkin Trooper equipped with a hot-shot lasgun can be equipped with 1 vox-caster (that
+	model’s hot-shot lasgun cannot be replaced).
+
+
+(
+This model equip 
+
+This model replace via equipment
+
+
+
+models (0 to many)
+limit times this can be taken (0 to 10)
+for every (2 to 10) [optional]
+weapons to replace (0 to many)
+equipment to replace (0 to many)
+weapons to gain (0 to many)
+equipment to gain (0 to many)
+cannot be replaced
+restrict duplicates (overall)
+	restrict duplicates (for a specific piece of equipment i.e. drones)
+Special restriction note (look at Tau Crisis suits limiting to 3 ranged weapon)
+
