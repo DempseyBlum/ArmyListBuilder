@@ -124,16 +124,16 @@ export interface WargearOptions {
       attributes: {
         display_name: string;
       };
-    };
-  }[];
+    }[];
+  };
   wargear_to_lose: {
     data: {
       id: string;
       attributes: {
         display_name: string;
       };
-    };
-  }[];
+    }[];
+  };
   restrict_via_model?: {
     data: {
       id: string;

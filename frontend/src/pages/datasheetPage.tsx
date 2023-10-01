@@ -104,7 +104,6 @@ export default function DatasheetListPage() {
 
     data.unitDatasheet.data.attributes.unit_composition_options.map(
       (unitOption) => {
-        console.log("TEST: ", unitOption);
         unitOption.models_in_unit.map((model) => {
           if (newStats.length === 0) {
             newStats = [
@@ -274,40 +273,40 @@ export default function DatasheetListPage() {
   // I also need a way to get all the weapon options, this includes default weapons from each model, and the weapon options for the datasheet.
   //Make a 2d array and map the results.
 
-  function GetWargearOptionNames(
-    weaponOptions: SimplifiedOption[],
-    wargearOptions: SimplifiedOption[]
-  ) {
-    let names = [];
-    weaponOptions.map((option) => {
-      names.push(option.attributes.display_name);
-    });
-    wargearOptions.map((option) => {
-      names.push(option.attributes.display_name);
-    });
-    return names;
-  }
+  // function GetWargearOptionNames(
+  //   weaponOptions: SimplifiedOption[],
+  //   wargearOptions: SimplifiedOption[]
+  // ) {
+  //   let names = [];
+  //   weaponOptions.map((option) => {
+  //     names.push(option.attributes.display_name);
+  //   });
+  //   wargearOptions.map((option) => {
+  //     names.push(option.attributes.display_name);
+  //   });
+  //   return names;
+  // }
 
-  function GetAllModelNames(
-    models: {
-      id: string;
-      attributes: {
-        display_name: string;
-      };
-    }[]
-  ) {
-    let names = [];
-    models.map((model) => {
-      names.push(model.attributes.display_name);
-    });
+  // function GetAllModelNames(
+  //   models: {
+  //     id: string;
+  //     attributes: {
+  //       display_name: string;
+  //     };
+  //   }[]
+  // ) {
+  //   let names = [];
+  //   models.map((model) => {
+  //     names.push(model.attributes.display_name);
+  //   });
 
-    const missing = CheckForMissingModelNames(names);
+  //   const missing = CheckForMissingModelNames(names);
 
-    if (missing.length > 0) {
-      return names;
-    }
-    return ["models"];
-  }
+  //   if (missing.length > 0) {
+  //     return names;
+  //   }
+  //   return ["models"];
+  // }
 
   function CheckForMissingModelNames(names: string[]) {
     let missingNames = [];
@@ -348,7 +347,6 @@ export default function DatasheetListPage() {
       });
     }
 
-    console.log("test: ", allGear);
     return (
       <li key={"option" + key}>
         {allGear.length > 0
@@ -510,25 +508,87 @@ export default function DatasheetListPage() {
               <div className={style.wargrearOptions}>
                 {data.unitDatasheet.data.attributes.wargear_options.map(
                   (option, i) => {
+                    console.log("test: ", option.weapons_to_lose);
                     if (
-                      option.wargear_to_lose === null &&
-                      option.weapons_to_lose === null
+                      option.wargear_to_lose.data.length > 0 ||
+                      option.weapons_to_lose.data.length > 0
                     ) {
-                      // There is no replacement. Just equipping.
+                      // This is a replacement option
+                      return (
+                        <>
+                          {option.gear_choices.length === 1 ? (
+                            /* Wargear options without dotpoints */
+                            <div className={style.option}>
+                              {option.how_many_models_can_take === null
+                                ? "Any number of models "
+                                : option.how_many_models_can_take === 1
+                                ? "1 model"
+                                : "Up to " +
+                                  option.how_many_models_can_take +
+                                  " models"}
+                              can each have their (old gear) replaced with (new
+                              gear)."
+                            </div>
+                          ) : (
+                            /* Wargear options with dotpoint choices */
+                            <div className={style.option}>
+                              {option.how_many_models_can_take === null
+                                ? "Any number of models "
+                                : option.how_many_models_can_take === 1
+                                ? "1 model "
+                                : "Up to " +
+                                  option.how_many_models_can_take +
+                                  " models"}
+                              can each have their (old gear) replaced with
+                              {option.how_many_options_can_be_picked === 1
+                                ? " one of the following:"
+                                : " any number of the following" +
+                                  (option.allow_duplicates
+                                    ? ", and can take duplicates:"
+                                    : ", and you cannot take duplicates:")}
+                              <ul>
+                                {option.gear_choices.map((gearChoices, i) => (
+                                  <>{GetOptionDotpoints(gearChoices, i)}</>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </>
+                      );
                     }
 
+                    // This is an equip option
                     return (
                       <>
                         {option.gear_choices.length === 1 ? (
+                          /* Wargear options without dotpoints */
                           <div className={style.option}>
-                            Any number of models can each have their guardian
-                            spear replaced with 1 sentinel blade and 1
-                            praesidium shield. (TODO)
+                            {option.how_many_models_can_take === null
+                              ? "Any number of models "
+                              : option.how_many_models_can_take === 1
+                              ? "1 model"
+                              : "Up to " +
+                                option.how_many_models_can_take +
+                                " models"}
+                            can be equipped with (new gear)."
                           </div>
                         ) : (
+                          /* Wargear options with dotpoint choices */
                           <div className={style.option}>
-                            This model can be equipped with one of the
-                            following: (TODO)
+                            {option.how_many_models_can_take === null
+                              ? "Any number of models "
+                              : option.how_many_models_can_take === 1
+                              ? "1 model"
+                              : "Up to " +
+                                option.how_many_models_can_take +
+                                " models"}
+                            can be equipped with
+                            {option.how_many_options_can_be_picked === 1
+                              ? "one of the following:"
+                              : "any number of the following" +
+                                (option.allow_duplicates
+                                  ? ", and can take duplicates:"
+                                  : ". You cannot take duplicates:")}
                             <ul>
                               {option.gear_choices.map((gearChoices, i) => (
                                 <>{GetOptionDotpoints(gearChoices, i)}</>
