@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_options_options",
+  "info": {
+    "displayName": "option",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "wargear_to_gain": {
+      "type": "component",
+      "repeatable": true,
+      "component": "options.wargear"
+    },
+    "weapons_to_gain": {
+      "type": "component",
+      "repeatable": true,
+      "component": "options.weapon"
+    },
+    "points": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

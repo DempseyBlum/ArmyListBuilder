@@ -1,0 +1,66 @@
+{
+  "collectionName": "components_weargear_options",
+  "info": {
+    "displayName": "weargear_option",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "required": true,
+      "type": "string"
+    },
+    "weapons_to_lose": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::weapon.weapon"
+    },
+    "wargear_to_lose": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::wargear.wargear"
+    },
+    "restrict_via_model": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::model.model"
+    },
+    "restrict_via_weapon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::weapon.weapon"
+    },
+    "restrict_via_wargear": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wargear.wargear"
+    },
+    "can_take_for_every": {
+      "type": "integer",
+      "max": 10,
+      "min": 2
+    },
+    "how_many_models_can_take": {
+      "type": "integer",
+      "max": 10,
+      "min": 1
+    },
+    "how_many_options_can_be_picked": {
+      "required": true,
+      "type": "integer",
+      "min": 1,
+      "max": 5
+    },
+    "allow_duplicates": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "Options": {
+      "displayName": "option",
+      "type": "component",
+      "repeatable": true,
+      "component": "options.option"
+    }
+  }
+}

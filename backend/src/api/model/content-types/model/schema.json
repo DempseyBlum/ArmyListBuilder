@@ -66,7 +66,6 @@
     "default_wargear": {
       "type": "dynamiczone",
       "components": [
-        "datasheet.wargear-option",
         "datasheet.default-weapon"
       ],
       "required": true,

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_options_weapons",
+  "info": {
+    "displayName": "weapon",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "weapons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::weapon.weapon"
+    },
+    "number_of": {
+      "type": "integer",
+      "min": 1,
+      "max": 10,
+      "required": true,
+      "default": 1
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

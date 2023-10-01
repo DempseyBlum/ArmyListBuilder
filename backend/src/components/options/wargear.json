@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_options_wargears",
+  "info": {
+    "displayName": "wargear",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "wargear": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::wargear.wargear"
+    },
+    "number_of": {
+      "type": "integer",
+      "min": 1,
+      "max": 10,
+      "required": true,
+      "default": 1
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
