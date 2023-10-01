@@ -8,7 +8,7 @@
   "attributes": {
     "wargear": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::wargear.wargear"
     },
     "number_of": {

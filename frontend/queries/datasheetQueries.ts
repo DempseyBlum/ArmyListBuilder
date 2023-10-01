@@ -162,35 +162,37 @@ export interface WargearOptions {
   how_many_models_can_take?: number;
   how_many_options_can_be_picked: number;
   allow_duplicates: boolean;
-  options: {
-    wargear_to_gain: {
-      number_of: number;
-      label: string;
-      wargear: {
-        data: {
-          id: string;
-          attributes: {
-            display_name: string;
-          };
+  gear_choices: GearChoice[];
+}
+
+export interface GearChoice {
+  wargear_to_gain: {
+    number_of: number;
+    label: string;
+    wargear: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
         };
-      }[];
-    }[];
-    weapons_to_gain: {
-      number_of: number;
-      label: string;
-      weapons: {
-        data: {
-          id: string;
-          attributes: {
-            display_name: string;
-          };
-        };
-      }[];
-    }[];
-    points: number;
-    allow_duplicates_of_this_option: boolean;
-    special_notes?: string;
+      };
+    };
   }[];
+  weapons_to_gain: {
+    number_of: number;
+    label: string;
+    weapon: {
+      data: {
+        id: string;
+        attributes: {
+          display_name: string;
+        };
+      };
+    };
+  }[];
+  points: number;
+  allow_duplicates_of_this_option: boolean;
+  special_notes?: string;
 }
 
 export interface DatasheetWeapon {
@@ -439,7 +441,7 @@ export const datasheetByIDQuery = gql`
             how_many_models_can_take
             how_many_options_can_be_picked
             allow_duplicates
-            options {
+            gear_choices {
               wargear_to_gain {
                 number_of
                 label
@@ -455,7 +457,7 @@ export const datasheetByIDQuery = gql`
               weapons_to_gain {
                 number_of
                 label
-                weapons {
+                weapon {
                   data {
                     id
                     attributes {

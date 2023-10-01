@@ -57,11 +57,11 @@
       "default": true,
       "required": true
     },
-    "options": {
-      "displayName": "options",
+    "gear_choices": {
+      "displayName": "gear_choices",
       "type": "component",
       "repeatable": true,
-      "component": "options.option"
+      "component": "options.gear_choice"
     },
     "special_notes": {
       "type": "richtext"

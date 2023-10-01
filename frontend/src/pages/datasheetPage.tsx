@@ -11,6 +11,8 @@ import {
   DatasheetWeapon,
   datasheetByIDQuery,
   factionDatasheetsQuery,
+  WargearOptions,
+  GearChoice,
 } from "../../queries/datasheetQueries";
 import style from "../styles/datasheetPage.module.scss";
 
@@ -321,6 +323,48 @@ export default function DatasheetListPage() {
     return missingNames;
   }
 
+  function GetOptionDotpoints(gearChoices: GearChoice, key: number) {
+    const allGear: { numberOf: number; name: string }[] = [];
+
+    if (gearChoices.weapons_to_gain) {
+      gearChoices.weapons_to_gain.forEach((weapon) => {
+        if (weapon.weapon.data) {
+          allGear.push({
+            numberOf: weapon.number_of,
+            name: weapon.weapon.data.attributes.display_name,
+          });
+        }
+      });
+    }
+
+    if (gearChoices.wargear_to_gain) {
+      gearChoices.wargear_to_gain.forEach((wargear) => {
+        if (wargear.wargear.data) {
+          allGear.push({
+            numberOf: wargear.number_of,
+            name: wargear.wargear.data.attributes.display_name,
+          });
+        }
+      });
+    }
+
+    console.log("test: ", allGear);
+    return (
+      <li key={"option" + key}>
+        {allGear.length > 0
+          ? allGear.map((gear, t) => (
+              <>
+                {(t === 0 ? "" : t === allGear.length - 1 ? " and " : ", ") +
+                  gear.numberOf +
+                  " " +
+                  gear.name}
+              </>
+            ))
+          : ""}
+      </li>
+    );
+  }
+
   return (
     <div>
       {data ? (
@@ -466,12 +510,33 @@ export default function DatasheetListPage() {
               <div className={style.wargrearOptions}>
                 {data.unitDatasheet.data.attributes.wargear_options.map(
                   (option, i) => {
+                    if (
+                      option.wargear_to_lose === null &&
+                      option.weapons_to_lose === null
+                    ) {
+                      // There is no replacement. Just equipping.
+                    }
+
                     return (
-                      <ul>
-                        <li>
-                          This model can be equipped with one of the following:
-                        </li>
-                      </ul>
+                      <>
+                        {option.gear_choices.length === 1 ? (
+                          <div className={style.option}>
+                            Any number of models can each have their guardian
+                            spear replaced with 1 sentinel blade and 1
+                            praesidium shield. (TODO)
+                          </div>
+                        ) : (
+                          <div className={style.option}>
+                            This model can be equipped with one of the
+                            following: (TODO)
+                            <ul>
+                              {option.gear_choices.map((gearChoices, i) => (
+                                <>{GetOptionDotpoints(gearChoices, i)}</>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </>
                     );
                   }
                 )}

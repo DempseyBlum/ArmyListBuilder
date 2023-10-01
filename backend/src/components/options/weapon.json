@@ -6,9 +6,9 @@
   },
   "options": {},
   "attributes": {
-    "weapons": {
+    "weapon": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::weapon.weapon"
     },
     "number_of": {
