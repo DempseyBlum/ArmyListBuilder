@@ -11,7 +11,7 @@ import {
   DatasheetWeapon,
   datasheetByIDQuery,
   factionDatasheetsQuery,
-  WargearOptions,
+  WargearOption,
   GearChoice,
 } from "../../queries/datasheetQueries";
 import style from "../styles/datasheetPage.module.scss";
@@ -275,13 +275,13 @@ export default function DatasheetListPage() {
 
   // function GetWargearOptionNames(
   //   weaponOptions: SimplifiedOption[],
-  //   wargearOptions: SimplifiedOption[]
+  //   wargearOption: SimplifiedOption[]
   // ) {
   //   let names = [];
   //   weaponOptions.map((option) => {
   //     names.push(option.attributes.display_name);
   //   });
-  //   wargearOptions.map((option) => {
+  //   wargearOption.map((option) => {
   //     names.push(option.attributes.display_name);
   //   });
   //   return names;
@@ -360,6 +360,81 @@ export default function DatasheetListPage() {
             ))
           : ""}
       </li>
+    );
+  }
+
+  function GetReplacedGearString(option: WargearOption) {
+    const allGear: { name: string }[] = [];
+
+    if (option.weapons_to_lose) {
+      option.weapons_to_lose.data.forEach((weapon) => {
+        if (weapon) {
+          allGear.push({
+            name: weapon.attributes.display_name,
+          });
+        }
+      });
+    }
+
+    if (option.wargear_to_lose) {
+      option.wargear_to_lose.data.forEach((wargear) => {
+        if (wargear) {
+          allGear.push({
+            name: wargear.attributes.display_name,
+          });
+        }
+      });
+    }
+
+    return (
+      <>
+        {allGear.length > 0
+          ? allGear.map((gear, t) => (
+              <>
+                {(t === 0 ? "" : t === allGear.length - 1 ? " and " : ", ") +
+                  gear.name}
+              </>
+            ))
+          : ""}
+      </>
+    );
+  }
+
+  function GetNewGearString(option: WargearOption) {
+    const allGear: { numberOf: number; name: string }[] = [];
+
+    if (option.gear_choices[0]) {
+      option.gear_choices[0].weapons_to_gain.forEach((weapon) => {
+        if (weapon.weapon.data) {
+          allGear.push({
+            numberOf: weapon.number_of,
+            name: weapon.weapon.data.attributes.display_name,
+          });
+        }
+      });
+      option.gear_choices[0].wargear_to_gain.forEach((wargear) => {
+        if (wargear.wargear.data) {
+          allGear.push({
+            numberOf: wargear.number_of,
+            name: wargear.wargear.data.attributes.display_name,
+          });
+        }
+      });
+    }
+
+    return (
+      <>
+        {allGear.length > 0
+          ? allGear.map((gear, t) => (
+              <>
+                {(t === 0 ? "" : t === allGear.length - 1 ? " and " : ", ") +
+                  gear.numberOf +
+                  " " +
+                  gear.name}
+              </>
+            ))
+          : ""}
+      </>
     );
   }
 
@@ -526,8 +601,9 @@ export default function DatasheetListPage() {
                                 : "Up to " +
                                   option.how_many_models_can_take +
                                   " models"}
-                              can each have their (old gear) replaced with (new
-                              gear)."
+                              can each have their{" "}
+                              {GetReplacedGearString(option)} replaced with{" "}
+                              {GetNewGearString(option)}."
                             </div>
                           ) : (
                             /* Wargear options with dotpoint choices */
@@ -539,7 +615,8 @@ export default function DatasheetListPage() {
                                 : "Up to " +
                                   option.how_many_models_can_take +
                                   " models"}
-                              can each have their (old gear) replaced with
+                              can each have their{" "}
+                              {GetReplacedGearString(option)} replaced with
                               {option.how_many_options_can_be_picked === 1
                                 ? " one of the following:"
                                 : " any number of the following" +
@@ -570,7 +647,7 @@ export default function DatasheetListPage() {
                               : "Up to " +
                                 option.how_many_models_can_take +
                                 " models"}
-                            can be equipped with (new gear)."
+                            can be equipped with {GetNewGearString(option)}."
                           </div>
                         ) : (
                           /* Wargear options with dotpoint choices */

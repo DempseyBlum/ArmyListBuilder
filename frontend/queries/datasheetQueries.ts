@@ -105,7 +105,7 @@ interface Datasheet {
         max: number;
       }[];
     }[];
-    wargear_options: [WargearOptions];
+    wargear_options: [WargearOption];
     lead_units_list: {
       data: {
         attributes: {
@@ -116,7 +116,7 @@ interface Datasheet {
   };
 }
 
-export interface WargearOptions {
+export interface WargearOption {
   label: string;
   weapons_to_lose: {
     data: {
