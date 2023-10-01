@@ -5,16 +5,10 @@ import { Link, useParams } from "react-router-dom";
 import { OperationVariables } from "@apollo/client";
 import {
   DatasheetsReturnType,
-  NumberModelsMayReplace,
-  ReplacementForAnyNumber,
-  ReplacementForSingleModel,
-  ReplacementPer5or10,
   SimplifiedOption,
   SingleDatasheetReturnType,
-  ThisModelCanBeEquippedWith,
-  ThisModelMayReplace,
-  WargearOption,
-  WeaponOption,
+  DatasheetWargear,
+  DatasheetWeapon,
   datasheetByIDQuery,
   factionDatasheetsQuery,
 } from "../../queries/datasheetQueries";
@@ -62,93 +56,15 @@ type Wargear = {
 };
 
 function isWargear(
-  component: WeaponOption | WargearOption
-): component is WargearOption {
-  return (component as WargearOption).wargear !== undefined;
+  component: DatasheetWargear | DatasheetWeapon
+): component is DatasheetWargear {
+  return (component as DatasheetWargear).wargear !== undefined;
 }
 
 function isWeapon(
-  component: WeaponOption | WargearOption
-): component is WeaponOption {
-  return (component as WeaponOption).weapon !== undefined;
-}
-
-function isReplacementPer5or10(
-  component:
-    | ReplacementPer5or10
-    | ThisModelMayReplace
-    | NumberModelsMayReplace
-    | ReplacementForAnyNumber
-    | ReplacementForSingleModel
-    | ThisModelCanBeEquippedWith
-): component is ReplacementPer5or10 {
-  return (component as ReplacementPer5or10).forEvery5Models !== undefined;
-}
-
-function isThisModelMayReplace(
-  component:
-    | ReplacementPer5or10
-    | ThisModelMayReplace
-    | NumberModelsMayReplace
-    | ReplacementForAnyNumber
-    | ReplacementForSingleModel
-    | ThisModelCanBeEquippedWith
-): component is ThisModelMayReplace {
-  return (component as ThisModelMayReplace).thisModelMayReplace !== undefined;
-}
-
-function isNumberModelsMayReplace(
-  component:
-    | ReplacementPer5or10
-    | ThisModelMayReplace
-    | NumberModelsMayReplace
-    | ReplacementForAnyNumber
-    | ReplacementForSingleModel
-    | ThisModelCanBeEquippedWith
-): component is NumberModelsMayReplace {
-  return (component as NumberModelsMayReplace).numberCanReplace !== undefined;
-}
-
-function isReplacementForAnyNumber(
-  component:
-    | ReplacementPer5or10
-    | ThisModelMayReplace
-    | NumberModelsMayReplace
-    | ReplacementForAnyNumber
-    | ReplacementForSingleModel
-    | ThisModelCanBeEquippedWith
-): component is ReplacementForAnyNumber {
-  return (
-    (component as ReplacementForAnyNumber).anyNumberCanReplace !== undefined
-  );
-}
-
-function isReplacementForSingleModel(
-  component:
-    | ReplacementPer5or10
-    | ThisModelMayReplace
-    | NumberModelsMayReplace
-    | ReplacementForAnyNumber
-    | ReplacementForSingleModel
-    | ThisModelCanBeEquippedWith
-): component is ReplacementForSingleModel {
-  return (
-    (component as ReplacementForSingleModel).thisModelMayReplace !== undefined
-  );
-}
-
-function isThisModelCanBeEquippedWith(
-  component:
-    | ReplacementPer5or10
-    | ThisModelMayReplace
-    | NumberModelsMayReplace
-    | ReplacementForAnyNumber
-    | ReplacementForSingleModel
-    | ThisModelCanBeEquippedWith
-): component is ThisModelCanBeEquippedWith {
-  return (
-    (component as ThisModelCanBeEquippedWith).thisModelCanEquip !== undefined
-  );
+  component: DatasheetWeapon | DatasheetWargear
+): component is DatasheetWeapon {
+  return (component as DatasheetWeapon).weapon !== undefined;
 }
 
 export default function DatasheetListPage() {
@@ -175,7 +91,7 @@ export default function DatasheetListPage() {
   const [stats, setStats] = useState<Stats[]>([]);
   const [rangedWeapons, setRangedWeapons] = useState<RangedWeapon[]>([]);
   const [meleeWeapons, setMeleeWeapons] = useState<MeleeWeapon[]>([]);
-  const [wargear, setWargear] = useState<Wargear[]>([]);
+  const [wargearList, setWargearList] = useState<Wargear[]>([]);
 
   useEffect(() => {
     if (!data) {

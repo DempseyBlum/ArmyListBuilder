@@ -1,7 +1,7 @@
 {
-  "collectionName": "default_weapons",
+  "collectionName": "components_datasheet_default_wargears",
   "info": {
-    "displayName": "default weapon",
+    "displayName": "default wargear",
     "description": ""
   },
   "options": {},
@@ -10,10 +10,10 @@
       "type": "string",
       "required": true
     },
-    "weapon": {
+    "wargear": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::weapon.weapon"
+      "target": "api::wargear.wargear"
     }
   }
 }

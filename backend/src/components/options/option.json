@@ -25,6 +25,11 @@
     "label": {
       "type": "string",
       "required": true
+    },
+    "allow_duplicates_of_this_option": {
+      "type": "boolean",
+      "default": true,
+      "required": true
     }
   }
 }

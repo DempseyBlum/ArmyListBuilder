@@ -49,18 +49,22 @@
       "required": true,
       "type": "integer",
       "min": 1,
-      "max": 5
+      "max": 5,
+      "default": 1
     },
     "allow_duplicates": {
       "type": "boolean",
       "default": true,
       "required": true
     },
-    "Options": {
-      "displayName": "option",
+    "options": {
+      "displayName": "options",
       "type": "component",
       "repeatable": true,
       "component": "options.option"
+    },
+    "special_notes": {
+      "type": "richtext"
     }
   }
 }
