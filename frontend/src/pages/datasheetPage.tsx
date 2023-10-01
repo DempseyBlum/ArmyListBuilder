@@ -166,7 +166,7 @@ export default function DatasheetListPage() {
     // Get all the weapons and wargear
     let newRanged = [...rangedWeapons];
     let newMelee = [...meleeWeapons];
-    let newWargear = [...wargear];
+    let newWargear = [...wargearList];
 
     data.unitDatasheet.data.attributes.unit_composition_options.map(
       (unitOption) => {
@@ -265,7 +265,7 @@ export default function DatasheetListPage() {
     );
     setRangedWeapons([...newRanged]);
     setMeleeWeapons([...newMelee]);
-    setWargear([...newWargear]);
+    setWargearList([...newWargear]);
   }, [data]);
 
   // Need a good way to get all the stats of every model possible in the unit. Then display only the ones that have different stats.
@@ -466,143 +466,13 @@ export default function DatasheetListPage() {
               <div className={style.wargrearOptions}>
                 {data.unitDatasheet.data.attributes.wargear_options.map(
                   (option, i) => {
-                    if (isReplacementPer5or10(option)) {
-                      return (
-                        <ul>
-                          <li>
-                            For every {option.number} models in this unit,{" "}
-                            {option.max_models_that_can_do_this
-                              ? option.max_models_that_can_do_this
-                              : "any number of "}{" "}
-                            {option.model.data.attributes.display_name}'s{" "}
-                            {GetWargearOptionNames(
-                              option.weapons_to_replace.data,
-                              option.wargear_to_replace.data
-                            ).map((name, i, array) => {
-                              if ((i = 0)) {
-                                return name;
-                              } else if ((i = array.length - 1)) {
-                                return "and " + name;
-                              } else {
-                                return ", " + name;
-                              }
-                            })}{" "}
-                            can be replaced with one of the following:
-                          </li>
-                        </ul>
-                      );
-                    }
-                    if (isThisModelMayReplace(option)) {
-                      return (
-                        <ul>
-                          <li>
-                            This model's
-                            {GetWargearOptionNames(
-                              option.weapons_to_replace.data,
-                              option.wargear_to_replace.data
-                            ).map((name, i, array) => {
-                              if ((i = 0)) {
-                                return name;
-                              } else if ((i = array.length - 1)) {
-                                return "and " + name;
-                              } else {
-                                return ", " + name;
-                              }
-                            })}{" "}
-                            can be replaced with one of the following:
-                          </li>
-                        </ul>
-                      );
-                    }
-                    if (isNumberModelsMayReplace(option)) {
-                      return (
-                        <ul>
-                          <li>
-                            {option.number} model's may replace their{" "}
-                            {option.model.data.attributes.display_name}'s{" "}
-                            {GetWargearOptionNames(
-                              option.weapons_to_replace.data,
-                              option.wargear_to_replace.data
-                            ).map((name, i, array) => {
-                              if ((i = 0)) {
-                                return name;
-                              } else if ((i = array.length - 1)) {
-                                return "and " + name;
-                              } else {
-                                return ", " + name;
-                              }
-                            })}{" "}
-                            with one of the following:
-                          </li>
-                        </ul>
-                      );
-                    }
-                    if (isReplacementForAnyNumber(option)) {
-                      return (
-                        <ul>
-                          <li>
-                            Any number of{" "}
-                            {GetAllModelNames(option.models.data).map(
-                              (name, i, array) => {
-                                if ((i = 0)) {
-                                  return name;
-                                } else if ((i = array.length - 1)) {
-                                  return "and " + name;
-                                } else {
-                                  return ", " + name;
-                                }
-                              }
-                            )}{" "}
-                            can each have their
-                            {GetWargearOptionNames(
-                              option.weapons_to_replace.data,
-                              option.wargear_to_replace.data
-                            ).map((name, i, array) => {
-                              if ((i = 0)) {
-                                return name;
-                              } else if ((i = array.length - 1)) {
-                                return "and " + name;
-                              } else {
-                                return ", " + name;
-                              }
-                            })}{" "}
-                            replaced with one of the following:
-                          </li>
-                        </ul>
-                      );
-                    }
-                    if (isReplacementForSingleModel(option)) {
-                      return (
-                        <ul>
-                          <li>
-                            Each {option.model.data.attributes.display_name}'s{" "}
-                            {GetWargearOptionNames(
-                              option.weapons_to_replace.data,
-                              option.wargear_to_replace.data
-                            ).map((name, i, array) => {
-                              if ((i = 0)) {
-                                return name;
-                              } else if ((i = array.length - 1)) {
-                                return "and " + name;
-                              } else {
-                                return ", " + name;
-                              }
-                            })}{" "}
-                            can be replaced with one of the following:
-                          </li>
-                        </ul>
-                      );
-                    }
-                    if (isThisModelCanBeEquippedWith(option)) {
-                      return (
-                        <ul>
-                          <li>
-                            This model can be equipped with one of the
-                            following:
-                          </li>
-                        </ul>
-                      );
-                    }
+                    return (
+                      <ul>
+                        <li>
+                          This model can be equipped with one of the following:
+                        </li>
+                      </ul>
+                    );
                   }
                 )}
               </div>
