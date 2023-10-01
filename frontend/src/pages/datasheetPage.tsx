@@ -364,6 +364,7 @@ export default function DatasheetListPage() {
   }
 
   function GetReplacedGearString(option: WargearOption) {
+    let gearString = "";
     const allGear: { name: string }[] = [];
 
     if (option.weapons_to_lose) {
@@ -386,21 +387,19 @@ export default function DatasheetListPage() {
       });
     }
 
-    return (
-      <>
-        {allGear.length > 0
-          ? allGear.map((gear, t) => (
-              <>
-                {(t === 0 ? "" : t === allGear.length - 1 ? " and " : ", ") +
-                  gear.name}
-              </>
-            ))
-          : ""}
-      </>
+    allGear.forEach(
+      (gear, t) =>
+        (gearString =
+          gearString +
+          ((t === 0 ? "" : t === allGear.length - 1 ? " and " : ", ") +
+            gear.name))
     );
+
+    return gearString;
   }
 
   function GetNewGearString(option: WargearOption) {
+    let gearString = "";
     const allGear: { numberOf: number; name: string }[] = [];
 
     if (option.gear_choices[0]) {
@@ -422,89 +421,140 @@ export default function DatasheetListPage() {
       });
     }
 
-    return (
-      <>
-        {allGear.length > 0
-          ? allGear.map((gear, t) => (
-              <>
-                {(t === 0 ? "" : t === allGear.length - 1 ? " and " : ", ") +
-                  gear.numberOf +
-                  " " +
-                  gear.name}
-              </>
-            ))
-          : ""}
-      </>
+    allGear.forEach(
+      (gear, t) =>
+        (gearString =
+          gearString +
+          ((t === 0 ? "" : t === allGear.length - 1 ? " and " : ", ") +
+            gear.numberOf +
+            " " +
+            gear.name))
     );
+
+    return gearString;
   }
 
   function GetEquipString(option: WargearOption) {
-    return (
-      <>
-        {" "}
-        {option.how_many_models_can_take === null
-          ? "Any number of models "
-          : option.how_many_models_can_take === 1
-          ? "1 model"
-          : "Up to " + option.how_many_models_can_take + " models"}
-        can be equipped with {GetNewGearString(option)}."
-      </>
-    );
+    let message = "";
+    const newGear: string = GetNewGearString(option);
+
+    if (option.how_many_models_can_take === null) {
+      message = "Any number of models can be equipped with " + newGear + ".";
+    }
+
+    if (option.how_many_models_can_take === 1) {
+      message = "1 model can be equipped with " + newGear + ".";
+    }
+
+    if (option.how_many_models_can_take > 1) {
+      message =
+        "Up to " +
+        option.how_many_models_can_take +
+        " models can be equipped with " +
+        newGear +
+        ".";
+    }
+
+    return message;
   }
 
   function GetEquipStringWithGearChoices(option: WargearOption) {
-    return (
-      <>
-        {" "}
-        {option.how_many_models_can_take === null
-          ? "Any number of models "
-          : option.how_many_models_can_take === 1
-          ? "1 model"
-          : "Up to " + option.how_many_models_can_take + " models"}
-        can be equipped with
-        {option.how_many_options_can_be_picked === 1
-          ? "one of the following:"
-          : "any number of the following" +
-            (option.allow_duplicates
-              ? ", and can take duplicates:"
-              : ". You cannot take duplicates:")}
-      </>
-    );
+    let message = "";
+    const howMany =
+      option.how_many_options_can_be_picked === 1
+        ? "one of the following:"
+        : "any number of the following" +
+          (option.allow_duplicates
+            ? ", and can take duplicates:"
+            : ". You cannot take duplicates:");
+
+    if (option.how_many_models_can_take === null) {
+      message = "Any number of models can be equipped with " + howMany;
+    }
+
+    if (option.how_many_models_can_take === 1) {
+      message = "1 model can be equipped with " + howMany;
+    }
+
+    if (option.how_many_models_can_take > 1) {
+      message =
+        "Up to " +
+        option.how_many_models_can_take +
+        " models can be equipped with " +
+        howMany;
+    }
+
+    return message;
   }
 
   function GetReplacementString(option: WargearOption) {
-    return (
-      <>
-        {option.how_many_models_can_take === null
-          ? "Any number of models "
-          : option.how_many_models_can_take === 1
-          ? "1 model's "
-          : "Up to " +
-            option.how_many_models_can_take +
-            " models can each have their"}
-        {GetReplacedGearString(option)} replaced with {GetNewGearString(option)}
-        ."
-      </>
-    );
+    let message = "";
+    const replacedGear: string = GetReplacedGearString(option);
+    const newGear: string = GetNewGearString(option);
+
+    if (option.how_many_models_can_take === null) {
+      message =
+        "Any number of models can each have their " +
+        replacedGear +
+        " replaced with " +
+        newGear +
+        ".";
+    }
+
+    if (option.how_many_models_can_take === 1) {
+      message =
+        "1 model's " + replacedGear + " can be replaced with " + newGear + ".";
+    }
+
+    if (option.how_many_models_can_take > 1) {
+      message =
+        "Up to " +
+        option.how_many_models_can_take +
+        " models can have their " +
+        replacedGear +
+        " replaced with " +
+        newGear +
+        ".";
+    }
+
+    return message;
   }
 
   function GetReplacementStringWithGearChoices(option: WargearOption) {
-    return (
-      <>
-        {option.how_many_models_can_take === null
-          ? "Any number of models "
-          : option.how_many_models_can_take === 1
-          ? "1 model "
-          : "Up to " + option.how_many_models_can_take + " models"}
-        can each have their {GetReplacedGearString(option)} replaced with
-        {option.how_many_options_can_be_picked === 1
-          ? " one of the following:"
-          : " any number of the following" +
-            (option.allow_duplicates
-              ? ", and can take duplicates:"
-              : ", and you cannot take duplicates:")}
-      </>
-    );
+    let message = "";
+    const replacedGear: string = GetReplacedGearString(option);
+
+    const howMany =
+      option.how_many_options_can_be_picked === 1
+        ? "one of the following:"
+        : "any number of the following" +
+          (option.allow_duplicates
+            ? ", and can take duplicates:"
+            : ". You cannot take duplicates:");
+
+    if (option.how_many_models_can_take === null) {
+      message =
+        "Any number of models can each have their " +
+        replacedGear +
+        " replaced with " +
+        howMany;
+    }
+
+    if (option.how_many_models_can_take === 1) {
+      message = "1 model's" + replacedGear + "can be replaced with " + howMany;
+    }
+
+    if (option.how_many_models_can_take > 1) {
+      message =
+        "Up to " +
+        option.how_many_models_can_take +
+        " models can have their " +
+        replacedGear +
+        " replaced with " +
+        howMany;
+    }
+
+    return message;
   }
 
   return (
@@ -652,7 +702,6 @@ export default function DatasheetListPage() {
               <div className={style.wargrearOptions}>
                 {data.unitDatasheet.data.attributes.wargear_options.map(
                   (option, i) => {
-                    console.log("test: ", option.weapons_to_lose);
                     if (
                       option.wargear_to_lose.data.length > 0 ||
                       option.weapons_to_lose.data.length > 0
