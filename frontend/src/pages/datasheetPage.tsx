@@ -438,6 +438,75 @@ export default function DatasheetListPage() {
     );
   }
 
+  function GetEquipString(option: WargearOption) {
+    return (
+      <>
+        {" "}
+        {option.how_many_models_can_take === null
+          ? "Any number of models "
+          : option.how_many_models_can_take === 1
+          ? "1 model"
+          : "Up to " + option.how_many_models_can_take + " models"}
+        can be equipped with {GetNewGearString(option)}."
+      </>
+    );
+  }
+
+  function GetEquipStringWithGearChoices(option: WargearOption) {
+    return (
+      <>
+        {" "}
+        {option.how_many_models_can_take === null
+          ? "Any number of models "
+          : option.how_many_models_can_take === 1
+          ? "1 model"
+          : "Up to " + option.how_many_models_can_take + " models"}
+        can be equipped with
+        {option.how_many_options_can_be_picked === 1
+          ? "one of the following:"
+          : "any number of the following" +
+            (option.allow_duplicates
+              ? ", and can take duplicates:"
+              : ". You cannot take duplicates:")}
+      </>
+    );
+  }
+
+  function GetReplacementString(option: WargearOption) {
+    return (
+      <>
+        {option.how_many_models_can_take === null
+          ? "Any number of models "
+          : option.how_many_models_can_take === 1
+          ? "1 model's "
+          : "Up to " +
+            option.how_many_models_can_take +
+            " models can each have their"}
+        {GetReplacedGearString(option)} replaced with {GetNewGearString(option)}
+        ."
+      </>
+    );
+  }
+
+  function GetReplacementStringWithGearChoices(option: WargearOption) {
+    return (
+      <>
+        {option.how_many_models_can_take === null
+          ? "Any number of models "
+          : option.how_many_models_can_take === 1
+          ? "1 model "
+          : "Up to " + option.how_many_models_can_take + " models"}
+        can each have their {GetReplacedGearString(option)} replaced with
+        {option.how_many_options_can_be_picked === 1
+          ? " one of the following:"
+          : " any number of the following" +
+            (option.allow_duplicates
+              ? ", and can take duplicates:"
+              : ", and you cannot take duplicates:")}
+      </>
+    );
+  }
+
   return (
     <div>
       {data ? (
@@ -594,35 +663,12 @@ export default function DatasheetListPage() {
                           {option.gear_choices.length === 1 ? (
                             /* Wargear options without dotpoints */
                             <div className={style.option}>
-                              {option.how_many_models_can_take === null
-                                ? "Any number of models "
-                                : option.how_many_models_can_take === 1
-                                ? "1 model"
-                                : "Up to " +
-                                  option.how_many_models_can_take +
-                                  " models"}
-                              can each have their{" "}
-                              {GetReplacedGearString(option)} replaced with{" "}
-                              {GetNewGearString(option)}."
+                              {GetReplacementString(option)}
                             </div>
                           ) : (
                             /* Wargear options with dotpoint choices */
                             <div className={style.option}>
-                              {option.how_many_models_can_take === null
-                                ? "Any number of models "
-                                : option.how_many_models_can_take === 1
-                                ? "1 model "
-                                : "Up to " +
-                                  option.how_many_models_can_take +
-                                  " models"}
-                              can each have their{" "}
-                              {GetReplacedGearString(option)} replaced with
-                              {option.how_many_options_can_be_picked === 1
-                                ? " one of the following:"
-                                : " any number of the following" +
-                                  (option.allow_duplicates
-                                    ? ", and can take duplicates:"
-                                    : ", and you cannot take duplicates:")}
+                              {GetReplacementStringWithGearChoices(option)}
                               <ul>
                                 {option.gear_choices.map((gearChoices, i) => (
                                   <>{GetOptionDotpoints(gearChoices, i)}</>
@@ -640,32 +686,12 @@ export default function DatasheetListPage() {
                         {option.gear_choices.length === 1 ? (
                           /* Wargear options without dotpoints */
                           <div className={style.option}>
-                            {option.how_many_models_can_take === null
-                              ? "Any number of models "
-                              : option.how_many_models_can_take === 1
-                              ? "1 model"
-                              : "Up to " +
-                                option.how_many_models_can_take +
-                                " models"}
-                            can be equipped with {GetNewGearString(option)}."
+                            {GetEquipString(option)}
                           </div>
                         ) : (
                           /* Wargear options with dotpoint choices */
                           <div className={style.option}>
-                            {option.how_many_models_can_take === null
-                              ? "Any number of models "
-                              : option.how_many_models_can_take === 1
-                              ? "1 model"
-                              : "Up to " +
-                                option.how_many_models_can_take +
-                                " models"}
-                            can be equipped with
-                            {option.how_many_options_can_be_picked === 1
-                              ? "one of the following:"
-                              : "any number of the following" +
-                                (option.allow_duplicates
-                                  ? ", and can take duplicates:"
-                                  : ". You cannot take duplicates:")}
+                            {GetEquipStringWithGearChoices(option)}
                             <ul>
                               {option.gear_choices.map((gearChoices, i) => (
                                 <>{GetOptionDotpoints(gearChoices, i)}</>
