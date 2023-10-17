@@ -77,7 +77,7 @@ interface Datasheet {
     }[];
     unit_composition_options: {
       models_in_unit: {
-        model: {
+        model?: {
           data: {
             id: string;
             attributes: {
@@ -102,7 +102,7 @@ interface Datasheet {
           };
         };
         min: number;
-        max: number;
+        max?: number;
       }[];
     }[];
     wargear_options: [WargearOption];

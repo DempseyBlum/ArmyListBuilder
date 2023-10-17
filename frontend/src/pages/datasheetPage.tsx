@@ -308,19 +308,19 @@ export default function DatasheetListPage() {
   //   return ["models"];
   // }
 
-  function CheckForMissingModelNames(names: string[]) {
-    let missingNames = [];
-    data.unitDatasheet.data.attributes.unit_composition_options.map(
-      (unitOption) => {
-        unitOption.models_in_unit.map((model) => {
-          if (!names.includes(model.model.data.attributes.display_name)) {
-            missingNames.push(model);
-          }
-        });
-      }
-    );
-    return missingNames;
-  }
+  // function CheckForMissingModelNames(names: string[]) {
+  //   let missingNames = [];
+  //   data.unitDatasheet.data.attributes.unit_composition_options.map(
+  //     (unitOption) => {
+  //       unitOption.models_in_unit.map((model) => {
+  //         if (!names.includes(model.model.data.attributes.display_name)) {
+  //           missingNames.push(model);
+  //         }
+  //       });
+  //     }
+  //   );
+  //   return missingNames;
+  // }
 
   function GetOptionDotpoints(gearChoices: GearChoice, key: number) {
     const allGear: { numberOf: number; name: string }[] = [];
@@ -435,31 +435,32 @@ export default function DatasheetListPage() {
   }
 
   function GetEquipString(option: WargearOption) {
-    let message = "";
     const newGear: string = GetNewGearString(option);
 
+    if (IsSingleModelUnit()) {
+      return "This model can be equipped with " + newGear + ".";
+    }
+
     if (option.how_many_models_can_take === null) {
-      message = "Any number of models can be equipped with " + newGear + ".";
+      return "Any number of models can be equipped with " + newGear + ".";
     }
 
     if (option.how_many_models_can_take === 1) {
-      message = "1 model can be equipped with " + newGear + ".";
+      return "1 model can be equipped with " + newGear + ".";
     }
 
     if (option.how_many_models_can_take > 1) {
-      message =
+      return (
         "Up to " +
         option.how_many_models_can_take +
         " models can be equipped with " +
         newGear +
-        ".";
+        "."
+      );
     }
-
-    return message;
   }
 
   function GetEquipStringWithGearChoices(option: WargearOption) {
-    let message = "";
     const howMany =
       option.how_many_options_can_be_picked === 1
         ? "one of the following:"
@@ -468,60 +469,72 @@ export default function DatasheetListPage() {
             ? ", and can take duplicates:"
             : ". You cannot take duplicates:");
 
+    if (IsSingleModelUnit()) {
+      return "This model can be equipped with " + howMany;
+    }
+
     if (option.how_many_models_can_take === null) {
-      message = "Any number of models can be equipped with " + howMany;
+      return "Any number of models can be equipped with " + howMany;
     }
 
     if (option.how_many_models_can_take === 1) {
-      message = "1 model can be equipped with " + howMany;
+      return "1 model can be equipped with " + howMany;
     }
 
     if (option.how_many_models_can_take > 1) {
-      message =
+      return (
         "Up to " +
         option.how_many_models_can_take +
         " models can be equipped with " +
-        howMany;
+        howMany
+      );
     }
-
-    return message;
   }
 
   function GetReplacementString(option: WargearOption) {
-    let message = "";
     const replacedGear: string = GetReplacedGearString(option);
     const newGear: string = GetNewGearString(option);
 
+    if (IsSingleModelUnit()) {
+      return (
+        "This model's " +
+        replacedGear +
+        " can be replaced with " +
+        newGear +
+        "."
+      );
+    }
+
     if (option.how_many_models_can_take === null) {
-      message =
+      return (
         "Any number of models can each have their " +
         replacedGear +
         " replaced with " +
         newGear +
-        ".";
+        "."
+      );
     }
 
     if (option.how_many_models_can_take === 1) {
-      message =
-        "1 model's " + replacedGear + " can be replaced with " + newGear + ".";
+      return (
+        "1 model's " + replacedGear + " can be replaced with " + newGear + "."
+      );
     }
 
     if (option.how_many_models_can_take > 1) {
-      message =
+      return (
         "Up to " +
         option.how_many_models_can_take +
         " models can have their " +
         replacedGear +
         " replaced with " +
         newGear +
-        ".";
+        "."
+      );
     }
-
-    return message;
   }
 
   function GetReplacementStringWithGearChoices(option: WargearOption) {
-    let message = "";
     const replacedGear: string = GetReplacedGearString(option);
 
     const howMany =
@@ -532,29 +545,66 @@ export default function DatasheetListPage() {
             ? ", and can take duplicates:"
             : ". You cannot take duplicates:");
 
+    if (IsSingleModelUnit()) {
+      return (
+        "This model's " + replacedGear + " can be replaced with " + howMany
+      );
+    }
+
     if (option.how_many_models_can_take === null) {
-      message =
+      return (
         "Any number of models can each have their " +
         replacedGear +
         " replaced with " +
-        howMany;
+        howMany
+      );
     }
 
     if (option.how_many_models_can_take === 1) {
-      message = "1 model's" + replacedGear + "can be replaced with " + howMany;
+      return "1 model's" + replacedGear + "can be replaced with " + howMany;
     }
 
     if (option.how_many_models_can_take > 1) {
-      message =
+      // Not checking for singule model units becuase this option isn't available for them.
+      return (
         "Up to " +
         option.how_many_models_can_take +
         " models can have their " +
         replacedGear +
         " replaced with " +
-        howMany;
+        howMany
+      );
+    }
+  }
+
+  // Function to determine if the unit is a singular model.
+  // If it is, then the gear options should be displayed as 'this model'
+  function IsSingleModelUnit() {
+    const compOptions =
+      data.unitDatasheet.data.attributes.unit_composition_options;
+
+    if (compOptions.length > 1) {
+      // Singular models don't have multiple composition options
+      return false;
     }
 
-    return message;
+    if (compOptions[0].models_in_unit.length > 1) {
+      // Singular models don't have multiple types of models
+      return false;
+    }
+
+    if (
+      compOptions[0].models_in_unit[0].min > 1 ||
+      (compOptions[0].models_in_unit[0].max &&
+        compOptions[0].models_in_unit[0].max > 1)
+    ) {
+      console.log("max: ", compOptions[0].models_in_unit[0].max);
+      console.log("min: ", compOptions[0].models_in_unit[0].min);
+      // Units with squad sizes can't be singular
+      return false;
+    }
+
+    return true;
   }
 
   return (

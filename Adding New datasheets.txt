@@ -1,0 +1,10 @@
+﻿1. If it's a character that leads units ensure that any unit's it can lead have been created first (since they will need to be linked)
+
+2. Check if the units weapons are already added. If they are not then add them in.
+(remember that units, especially characters, can sometimes have different versions of the same weapon. Especially with attack number)
+
+3. Check if the unit's keyword is already added. Add if it's missing.
+
+4. Check if the possible models included in the unit are already added. Add any missing ones.
+
+5. Begin creating the datasheet.
