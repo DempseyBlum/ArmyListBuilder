@@ -36,7 +36,7 @@ interface DatasheetSimplified {
   };
 }
 
-interface Datasheet {
+export interface Datasheet {
   id;
   attributes: {
     display_name: string;
