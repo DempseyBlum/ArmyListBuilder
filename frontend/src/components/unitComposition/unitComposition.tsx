@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import style from "./unitComposition.module.scss";
 import {
+  CompositionOption,
   Datasheet,
   DatasheetWargear,
   DatasheetWeapon,
@@ -30,13 +31,15 @@ export default function UnitComposition({
   function GetDefaultWargearString() {
     if (unitDatasheet.attributes.unit_composition.length === 0) {
       console.log("No models found in unit");
-      return "";
+      return [];
     }
 
-    let defaultWargear = "";
-
     // For units with only one model
-    if (unitDatasheet.attributes.unit_composition.length === 1) {
+    if (
+      unitDatasheet.attributes.unit_composition.length === 1 &&
+      unitDatasheet.attributes.extra_unit_compositions.length === 0
+    ) {
+      let defaultWargear = "";
       unitDatasheet.attributes.unit_composition[0].model.data.attributes.default_wargear.forEach(
         (gear, i, array) => {
           if (isWargear(gear)) {
@@ -51,17 +54,55 @@ export default function UnitComposition({
           }
         }
       );
-      console.log("TEST 2", defaultWargear);
-      return "Every model is equipped with: " + defaultWargear;
+      return [
+        (IsSingularModel(unitDatasheet.attributes.unit_composition[0])
+          ? "This model is equipped with: "
+          : "Every model is equipped with: ") + defaultWargear,
+      ];
     }
 
-    unitDatasheet.attributes.unit_composition.forEach((model) => {
-      if (model.model.data.attributes.default_wargear) {
-        defaultWargear += model.model.data.attributes.default_wargear;
-      }
+    let defaultWargearList = [];
+    unitDatasheet.attributes.unit_composition.forEach((compositionOption) => {
+      const modelName = compositionOption.model.data.attributes.display_name;
+
+      let defaultWargear = "";
+      unitDatasheet.attributes.unit_composition[0].model.data.attributes.default_wargear.forEach(
+        (gear, i, array) => {
+          if (isWargear(gear)) {
+            defaultWargear +=
+              gear.wargear.data.attributes.display_name +
+              (i < array.length - 1 ? "; " : ".");
+          }
+          if (isWeapon(gear)) {
+            defaultWargear +=
+              gear.weapon.data.attributes.display_name +
+              (i < array.length - 1 ? "; " : ".");
+          }
+        }
+      );
+
+      defaultWargearList.push(
+        (IsSingularModel(compositionOption)
+          ? "The " + modelName + " is equipped with: "
+          : "Every " + modelName + " is equipped with: ") + defaultWargear
+      );
     });
 
-    return "TODO";
+    return defaultWargearList;
+  }
+
+  // Function to determine if the unit is a singular model.
+  // If it is, then the gear options should be displayed as 'this model'
+  function IsSingularModel(compositionOption: CompositionOption) {
+    if (
+      compositionOption.min > 1 ||
+      (compositionOption.max && compositionOption.max > 1)
+    ) {
+      // Units with squad sizes can't be singular
+      return false;
+    }
+
+    return true;
   }
 
   return (
@@ -77,7 +118,11 @@ export default function UnitComposition({
           );
         })}
       </ul>
-      <div className={style.defaultWargear}>{GetDefaultWargearString()}</div>
+      <div className={style.defaultWargear}>
+        {GetDefaultWargearString().map((modelWargear) => {
+          return <p>{modelWargear}</p>;
+        })}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_datasheet_extra_unit_compositions",
+  "info": {
+    "displayName": "Extra Unit Compositions",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "unit_composition": {
+      "type": "component",
+      "repeatable": true,
+      "component": "datasheet.unit-composition",
+      "required": true
+    },
+    "name_for_ordering": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
