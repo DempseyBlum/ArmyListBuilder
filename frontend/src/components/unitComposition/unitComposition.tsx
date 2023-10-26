@@ -24,13 +24,9 @@ export default function UnitComposition({
 }: {
   unitDatasheet: Datasheet;
 }) {
-  useEffect(() => {
-    console.log("TESTING: ", GetDefaultWargearString());
-  }, []);
-
   function GetDefaultWargearString() {
     if (unitDatasheet.attributes.unit_composition.length === 0) {
-      console.log("No models found in unit");
+      console.log("ERROR: No models found in unit");
       return [];
     }
 
@@ -62,7 +58,10 @@ export default function UnitComposition({
     }
 
     let defaultWargearList = [];
+    let modelsUsed = [];
+
     unitDatasheet.attributes.unit_composition.forEach((compositionOption) => {
+      modelsUsed.push(compositionOption.model.data.id);
       const modelName = compositionOption.model.data.attributes.display_name;
 
       let defaultWargear = "";
@@ -88,6 +87,44 @@ export default function UnitComposition({
       );
     });
 
+    unitDatasheet.attributes.extra_unit_compositions.forEach(
+      (extraCompositionOptions) => {
+        extraCompositionOptions.unit_composition.forEach(
+          (compositionOption) => {
+            // Extra compositions often include duplicate models, so we need to check if we've already added them
+            if (modelsUsed.includes(compositionOption.model.data.id)) {
+              return;
+            }
+            modelsUsed.push(compositionOption.model.data.id);
+            const modelName =
+              compositionOption.model.data.attributes.display_name;
+
+            let defaultWargear = "";
+            unitDatasheet.attributes.unit_composition[0].model.data.attributes.default_wargear.forEach(
+              (gear, i, array) => {
+                if (isWargear(gear)) {
+                  defaultWargear +=
+                    gear.wargear.data.attributes.display_name +
+                    (i < array.length - 1 ? "; " : ".");
+                }
+                if (isWeapon(gear)) {
+                  defaultWargear +=
+                    gear.weapon.data.attributes.display_name +
+                    (i < array.length - 1 ? "; " : ".");
+                }
+              }
+            );
+
+            defaultWargearList.push(
+              (IsSingularModel(compositionOption)
+                ? "The " + modelName + " is equipped with: "
+                : "Every " + modelName + " is equipped with: ") + defaultWargear
+            );
+          }
+        );
+      }
+    );
+
     return defaultWargearList;
   }
 
@@ -108,15 +145,75 @@ export default function UnitComposition({
   return (
     <div className={style.unitCompositionWrapper}>
       <ul>
-        {unitDatasheet.attributes.unit_composition.map((modelComposition) => {
-          return (
+        {unitDatasheet.attributes.extra_unit_compositions.length > 0 ? (
+          // If there are extra unit compositions, then we use a different display
+          <>
             <li>
-              {modelComposition.min}
-              {modelComposition.max ? "-" + modelComposition.max : ""}{" "}
-              {modelComposition.model.data.attributes.display_name}
+              {unitDatasheet.attributes.unit_composition.map(
+                (modelComposition, i, array) => {
+                  return (
+                    <>
+                      {modelComposition.min}
+                      {modelComposition.max
+                        ? "-" + modelComposition.max
+                        : ""}{" "}
+                      {modelComposition.model.data.attributes.display_name}
+                      {i < array.length - 1
+                        ? i < array.length - 2
+                          ? ", "
+                          : " and "
+                        : ""}
+                    </>
+                  );
+                }
+              )}
             </li>
-          );
-        })}
+            {unitDatasheet.attributes.extra_unit_compositions.map(
+              (extraCompositions) => {
+                return (
+                  <>
+                    <div>OR</div>
+                    <li>
+                      {extraCompositions.unit_composition.map(
+                        (modelComposition, i, array) => {
+                          return (
+                            <>
+                              {modelComposition.min}
+                              {modelComposition.max
+                                ? "-" + modelComposition.max
+                                : ""}{" "}
+                              {
+                                modelComposition.model.data.attributes
+                                  .display_name
+                              }
+                              {i < array.length - 1
+                                ? i < array.length - 2
+                                  ? ", "
+                                  : " and "
+                                : ""}
+                            </>
+                          );
+                        }
+                      )}
+                    </li>
+                  </>
+                );
+              }
+            )}
+          </>
+        ) : (
+          unitDatasheet.attributes.unit_composition.map((modelComposition) => {
+            if (unitDatasheet.attributes.extra_unit_compositions.length === 0) {
+              return (
+                <li>
+                  {modelComposition.min}
+                  {modelComposition.max ? "-" + modelComposition.max : ""}{" "}
+                  {modelComposition.model.data.attributes.display_name}
+                </li>
+              );
+            }
+          })
+        )}
       </ul>
       <div className={style.defaultWargear}>
         {GetDefaultWargearString().map((modelWargear) => {

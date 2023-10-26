@@ -43,6 +43,11 @@
       "default": true,
       "required": true
     },
+    "has_extra_faction_ability": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
     "abilities": {
       "type": "component",
       "repeatable": true,

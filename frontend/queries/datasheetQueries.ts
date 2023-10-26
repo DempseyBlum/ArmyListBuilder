@@ -63,10 +63,13 @@ export interface Datasheet {
           display_name: string;
           ruleName: string;
           ruleDescription: string;
+          extraRuleName: string;
+          extraRuleDescription?: string;
         };
       };
     };
     has_faction_ability: boolean;
+    has_extra_faction_ability: boolean;
     abilities: {
       name: string;
       description: string;
@@ -173,24 +176,14 @@ export interface GearChoice {
     number_of: number;
     label: string;
     wargear: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: Wargear;
     };
   }[];
   weapons_to_gain: {
     number_of: number;
     label: string;
     weapon: {
-      data: {
-        id: string;
-        attributes: {
-          display_name: string;
-        };
-      };
+      data: Weapon;
     };
   }[];
   points: number;
@@ -301,10 +294,13 @@ export const datasheetByIDQuery = gql`
                 display_name
                 ruleName
                 ruleDescription
+                extraRuleName
+                extraRuleDescription
               }
             }
           }
           has_faction_ability
+          has_extra_faction_ability
           abilities {
             name
             description
@@ -536,6 +532,7 @@ export const datasheetByIDQuery = gql`
                     id
                     attributes {
                       display_name
+                      ability
                     }
                   }
                 }
@@ -548,6 +545,39 @@ export const datasheetByIDQuery = gql`
                     id
                     attributes {
                       display_name
+                      ranged_weapon_stats {
+                        display_name_override
+                        weapon_keywords {
+                          data {
+                            id
+                            attributes {
+                              display_name
+                            }
+                          }
+                        }
+                        range
+                        skill
+                        attacks
+                        penetration
+                        strength
+                        damage
+                      }
+                      melee_weapon_stats {
+                        display_name_override
+                        weapon_keywords {
+                          data {
+                            id
+                            attributes {
+                              display_name
+                            }
+                          }
+                        }
+                        attacks
+                        skill
+                        strength
+                        penetration
+                        damage
+                      }
                     }
                   }
                 }

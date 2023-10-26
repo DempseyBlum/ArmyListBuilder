@@ -60,8 +60,8 @@ export default function DatasheetListPage() {
 
   type Wargear = {
     id: string;
-    Name: string;
-    Ability: string;
+    name: string;
+    ability: string;
   };
 
   const [rangedWeapons, setRangedWeapons] = useState<RangedWeapon[]>([]);
@@ -78,6 +78,101 @@ export default function DatasheetListPage() {
     let newMelee = [...meleeWeapons];
     let newWargear = [...wargearList];
 
+    // Add all the gear in wargear options to weapon / wargear list
+    data.unitDatasheet.data.attributes.wargear_options.map((wargearOption) => {
+      wargearOption.gear_choices.map((gearChoice) => {
+        gearChoice.wargear_to_gain.map((wargearChoice) => {
+          const wargear = wargearChoice.wargear.data;
+
+          let check = false;
+          newWargear.forEach((existingWargear) => {
+            if (existingWargear.id === wargear.id) {
+              check = true;
+            }
+          });
+
+          if (!check) {
+            newWargear.push({
+              id: wargear.id,
+              name: wargear.attributes.display_name,
+              ability: wargear.attributes.ability,
+            });
+          }
+        });
+
+        gearChoice.weapons_to_gain.map((weaponChoice) => {
+          const weapon = weaponChoice.weapon.data;
+          // Check if id of wargear already exists in newWargear
+          let check = false;
+          newRanged.forEach((ranged) => {
+            if (ranged.id === weapon.id) {
+              check = true;
+            }
+          });
+          if (
+            check == false &&
+            weapon.attributes.ranged_weapon_stats.length > 0
+          ) {
+            weapon.attributes.ranged_weapon_stats.map((rangedWeapon) => {
+              let keywords = [];
+              rangedWeapon.weapon_keywords.data.map((keyword) => {
+                keywords.push(keyword.attributes.display_name);
+              });
+
+              newRanged.push({
+                id: weapon.id,
+                Name:
+                  rangedWeapon.display_name_override ??
+                  weapon.attributes.display_name,
+                Keywords: keywords,
+                Range: rangedWeapon.range + `"`,
+                A: rangedWeapon.attacks,
+                BS: rangedWeapon.skill + "+",
+                S: rangedWeapon.strength,
+                AP: "-" + rangedWeapon.penetration,
+                D: rangedWeapon.damage,
+              });
+            });
+          }
+
+          check = false;
+
+          newMelee.forEach((melee) => {
+            if (melee.id === weapon.id) {
+              check = true;
+            }
+          });
+
+          if (
+            check == false &&
+            weapon.attributes.melee_weapon_stats.length > 0
+          ) {
+            weapon.attributes.melee_weapon_stats.map((meleeWeapon) => {
+              let keywords = [];
+              meleeWeapon.weapon_keywords.data.map((keyword) => {
+                keywords.push(keyword.attributes.display_name);
+              });
+
+              newMelee.push({
+                id: weapon.id,
+                Name:
+                  meleeWeapon.display_name_override ??
+                  weapon.attributes.display_name,
+                Keywords: keywords,
+                Range: "Melee",
+                A: meleeWeapon.attacks,
+                WS: meleeWeapon.skill + "+",
+                S: meleeWeapon.strength,
+                AP: "-" + meleeWeapon.penetration,
+                D: meleeWeapon.damage,
+              });
+            });
+          }
+        });
+      });
+    });
+
+    // Add all model's default weapons to weapon list.
     data.unitDatasheet.data.attributes.unit_composition.map(
       (models_in_unit) => {
         models_in_unit.model.data.attributes.default_wargear.map((gear) => {
@@ -90,13 +185,11 @@ export default function DatasheetListPage() {
               }
             });
             if (check === false) {
-              if (newWargear.length === 0) {
-                newWargear.push({
-                  id: gear.wargear.data.id,
-                  Name: gear.wargear.data.attributes.display_name,
-                  Ability: gear.wargear.data.attributes.ability,
-                });
-              }
+              newWargear.push({
+                id: gear.wargear.data.id,
+                name: gear.wargear.data.attributes.display_name,
+                ability: gear.wargear.data.attributes.ability,
+              });
             }
           } else if (isWeapon(gear)) {
             // Check if id of wargear already exists in newWargear
@@ -182,40 +275,55 @@ export default function DatasheetListPage() {
             <button>{"< "}Back</button>
           </Link>
           <h1>{data.unitDatasheet.data.attributes.display_name}</h1>
-          <h2>Keywords</h2>
-          <ul>
+          <h2>Abilities</h2>
+          <div>
+            CORE:{" "}
             {data.unitDatasheet.data.attributes.core_keywords.data.map(
-              (keyword, i) => (
-                <li key={"keyword" + i}>{keyword.attributes.display_name}</li>
+              (keyword, i, array) => (
+                <b key={"keyword" + i}>
+                  {keyword.attributes.display_name}
+                  {i < array.length - 1 ? ", " : ""}
+                </b>
               )
             )}
-          </ul>
-          <h2>Unit Keywords</h2>
-          <ul>
-            {data.unitDatasheet.data.attributes.unit_keywords.data.map(
-              (keyword, i) => (
-                <li key={"keyword" + i}>{keyword.attributes.display_name}</li>
-              )
-            )}
-          </ul>
-          <h2>Faction Ability</h2>
-          <ul>
-            {data.unitDatasheet.data.attributes.has_faction_ability ? (
-              <li>
+          </div>
+          <div>
+            FACTION:{" "}
+            {data.unitDatasheet.data.attributes.has_faction_ability && (
+              <b>
                 {
                   data.unitDatasheet.data.attributes.faction.data.attributes
                     .ruleName
                 }
-              </li>
-            ) : (
-              <div>None</div>
+              </b>
             )}
-          </ul>
-          <h2>Abilities</h2>
+            {data.unitDatasheet.data.attributes.has_faction_ability &&
+            data.unitDatasheet.data.attributes.has_extra_faction_ability &&
+            data.unitDatasheet.data.attributes.faction.data.attributes
+              .extraRuleName !== ""
+              ? ", "
+              : ""}
+            {data.unitDatasheet.data.attributes.has_extra_faction_ability && (
+              <b>
+                {
+                  data.unitDatasheet.data.attributes.faction.data.attributes
+                    .extraRuleName
+                }
+              </b>
+            )}
+          </div>
           <ul>
             {data.unitDatasheet.data.attributes.abilities.map((ability, i) => (
               <li key={"ability" + i}>
-                {ability.name}: {ability.description}
+                <b>{ability.name}:</b> {ability.description}
+              </li>
+            ))}
+          </ul>
+          <h2>Wargear Abilities</h2>
+          <ul>
+            {wargearList.map((wargear, i) => (
+              <li key={"wargear" + i}>
+                <b>{wargear.name}:</b> {wargear.ability}
               </li>
             ))}
           </ul>
@@ -230,6 +338,14 @@ export default function DatasheetListPage() {
           <WargearOptions unitDatasheet={data.unitDatasheet.data} />
           <h2>Unit Composition</h2>
           <UnitComposition unitDatasheet={data.unitDatasheet.data} />
+          <h2>Unit Keywords</h2>
+          <ul>
+            {data.unitDatasheet.data.attributes.unit_keywords.data.map(
+              (keyword, i) => (
+                <li key={"keyword" + i}>{keyword.attributes.display_name}</li>
+              )
+            )}
+          </ul>
         </>
       ) : (
         <div>Loading...</div>

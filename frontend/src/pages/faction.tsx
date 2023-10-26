@@ -37,6 +37,19 @@ export default function FactionPage() {
             <button>{"< "}Back</button>
           </Link>
           <h1>{data.faction.data.attributes.display_name}</h1>
+          <h2>Rules</h2>
+          <ul>
+            <li>
+              <b>{data.faction.data.attributes.ruleName}: </b>{" "}
+              {data.faction.data.attributes.ruleDescription}
+            </li>
+            {data.faction.data.attributes.extraRuleName !== "" && (
+              <li>
+                <b>{data.faction.data.attributes.extraRuleName}: </b>{" "}
+                {data.faction.data.attributes.extraRuleDescription}
+              </li>
+            )}
+          </ul>
           <h2>Detachments</h2>
           <ul>
             {data.faction.data.attributes.detachments.data.map(
