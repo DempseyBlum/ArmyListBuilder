@@ -75,35 +75,33 @@ export interface Datasheet {
       model_count: number;
       points: number;
     }[];
-    unit_composition_options: {
-      models_in_unit: {
-        model?: {
-          data: {
-            id: string;
-            attributes: {
-              display_name: string;
-              unit_keywords: {
-                data: {
-                  id: string;
-                  attributes: {
-                    display_name: string;
-                  };
+    unit_composition: {
+      model?: {
+        data: {
+          id: string;
+          attributes: {
+            display_name: string;
+            unit_keywords: {
+              data: {
+                id: string;
+                attributes: {
+                  display_name: string;
                 };
               };
-              movement: number;
-              toughness: number;
-              save: number;
-              wounds: number;
-              leadership: number;
-              objective_control: number;
-              invul_save: number;
-              default_wargear: [DatasheetWargear | DatasheetWeapon];
             };
+            movement: number;
+            toughness: number;
+            save: number;
+            wounds: number;
+            leadership: number;
+            objective_control: number;
+            invul_save: number;
+            default_wargear: [DatasheetWargear | DatasheetWeapon];
           };
         };
-        min: number;
-        max?: number;
-      }[];
+      };
+      min: number;
+      max?: number;
     }[];
     wargear_options: [WargearOption];
     lead_units_list: {
@@ -310,79 +308,77 @@ export const datasheetByIDQuery = gql`
             model_count
             points
           }
-          unit_composition_options {
-            models_in_unit {
-              model {
-                data {
-                  id
-                  attributes {
-                    display_name
-                    unit_keywords {
-                      data {
-                        id
-                        attributes {
-                          display_name
-                        }
+          unit_composition {
+            model {
+              data {
+                id
+                attributes {
+                  display_name
+                  unit_keywords {
+                    data {
+                      id
+                      attributes {
+                        display_name
                       }
                     }
-                    movement
-                    toughness
-                    save
-                    wounds
-                    leadership
-                    objective_control
-                    invul_save
-                    default_wargear {
-                      ... on ComponentDatasheetDefaultWargear {
-                        wargear {
-                          data {
-                            id
-                            attributes {
-                              display_name
-                              ability
-                            }
+                  }
+                  movement
+                  toughness
+                  save
+                  wounds
+                  leadership
+                  objective_control
+                  invul_save
+                  default_wargear {
+                    ... on ComponentDatasheetDefaultWargear {
+                      wargear {
+                        data {
+                          id
+                          attributes {
+                            display_name
+                            ability
                           }
                         }
                       }
-                      ... on ComponentDatasheetDefaultWeapon {
-                        weapon {
-                          data {
-                            id
-                            attributes {
-                              display_name
-                              ranged_weapon_stats {
-                                display_name_override
-                                weapon_keywords {
-                                  data {
-                                    id
-                                    attributes {
-                                      display_name
-                                    }
+                    }
+                    ... on ComponentDatasheetDefaultWeapon {
+                      weapon {
+                        data {
+                          id
+                          attributes {
+                            display_name
+                            ranged_weapon_stats {
+                              display_name_override
+                              weapon_keywords {
+                                data {
+                                  id
+                                  attributes {
+                                    display_name
                                   }
                                 }
-                                range
-                                skill
-                                attacks
-                                penetration
-                                strength
-                                damage
                               }
-                              melee_weapon_stats {
-                                display_name_override
-                                weapon_keywords {
-                                  data {
-                                    id
-                                    attributes {
-                                      display_name
-                                    }
+                              range
+                              skill
+                              attacks
+                              penetration
+                              strength
+                              damage
+                            }
+                            melee_weapon_stats {
+                              display_name_override
+                              weapon_keywords {
+                                data {
+                                  id
+                                  attributes {
+                                    display_name
                                   }
                                 }
-                                attacks
-                                skill
-                                strength
-                                penetration
-                                damage
                               }
+                              attacks
+                              skill
+                              strength
+                              penetration
+                              damage
                             }
                           }
                         }
@@ -391,9 +387,9 @@ export const datasheetByIDQuery = gql`
                   }
                 }
               }
-              min
-              max
             }
+            min
+            max
           }
           wargear_options {
             label

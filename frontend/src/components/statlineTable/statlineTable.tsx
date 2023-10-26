@@ -29,62 +29,59 @@ export default function StatlineTable({
     }
     // Get all the stats
     let newStats = [...stats];
+    unitDatasheet.attributes.unit_composition.map((model) => {
+      if (newStats.length === 0) {
+        newStats = [
+          {
+            Name: model.model.data.attributes.display_name,
+            M: model.model.data.attributes.movement,
+            T: model.model.data.attributes.toughness,
+            SV: model.model.data.attributes.save,
+            W: model.model.data.attributes.wounds,
+            LD: model.model.data.attributes.leadership,
+            OC: model.model.data.attributes.objective_control,
+            INVUL: model.model.data.attributes.invul_save,
+          },
+        ];
+      } else {
+        let check = false;
 
-    unitDatasheet.attributes.unit_composition_options.map((unitOption) => {
-      unitOption.models_in_unit.map((model) => {
-        if (newStats.length === 0) {
-          newStats = [
-            {
-              Name: model.model.data.attributes.display_name,
-              M: model.model.data.attributes.movement,
-              T: model.model.data.attributes.toughness,
-              SV: model.model.data.attributes.save,
-              W: model.model.data.attributes.wounds,
-              LD: model.model.data.attributes.leadership,
-              OC: model.model.data.attributes.objective_control,
-              INVUL: model.model.data.attributes.invul_save,
-            },
-          ];
-        } else {
-          let check = false;
-
-          // Check models stats compared to existing stats. Only push them if they are different.
-          newStats.forEach((statline) => {
-            if (statline.M !== model.model.data.attributes.movement) {
-              check = true;
-            } else if (statline.T !== model.model.data.attributes.toughness) {
-              check = true;
-            } else if (statline.SV !== model.model.data.attributes.save) {
-              check = true;
-            } else if (statline.W !== model.model.data.attributes.wounds) {
-              check = true;
-            } else if (statline.LD !== model.model.data.attributes.leadership) {
-              check = true;
-            } else if (
-              statline.OC !== model.model.data.attributes.objective_control
-            ) {
-              check = true;
-            } else if (
-              statline.INVUL !== model.model.data.attributes.invul_save
-            ) {
-              check = true;
-            }
-          });
-
-          if ((check = false)) {
-            newStats.push({
-              Name: model.model.data.attributes.display_name,
-              M: model.model.data.attributes.movement,
-              T: model.model.data.attributes.toughness,
-              SV: model.model.data.attributes.save,
-              W: model.model.data.attributes.wounds,
-              LD: model.model.data.attributes.leadership,
-              OC: model.model.data.attributes.objective_control,
-              INVUL: model.model.data.attributes.invul_save,
-            });
+        // Check models stats compared to existing stats. Only push them if they are different.
+        newStats.forEach((statline) => {
+          if (statline.M !== model.model.data.attributes.movement) {
+            check = true;
+          } else if (statline.T !== model.model.data.attributes.toughness) {
+            check = true;
+          } else if (statline.SV !== model.model.data.attributes.save) {
+            check = true;
+          } else if (statline.W !== model.model.data.attributes.wounds) {
+            check = true;
+          } else if (statline.LD !== model.model.data.attributes.leadership) {
+            check = true;
+          } else if (
+            statline.OC !== model.model.data.attributes.objective_control
+          ) {
+            check = true;
+          } else if (
+            statline.INVUL !== model.model.data.attributes.invul_save
+          ) {
+            check = true;
           }
+        });
+
+        if ((check = false)) {
+          newStats.push({
+            Name: model.model.data.attributes.display_name,
+            M: model.model.data.attributes.movement,
+            T: model.model.data.attributes.toughness,
+            SV: model.model.data.attributes.save,
+            W: model.model.data.attributes.wounds,
+            LD: model.model.data.attributes.leadership,
+            OC: model.model.data.attributes.objective_control,
+            INVUL: model.model.data.attributes.invul_save,
+          });
         }
-      });
+      }
     });
     setStats([...newStats]);
   }, [unitDatasheet]);

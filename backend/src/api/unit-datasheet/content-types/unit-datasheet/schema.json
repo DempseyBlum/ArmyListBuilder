@@ -54,10 +54,10 @@
       "component": "datasheet.points-breakpoint",
       "required": true
     },
-    "unit_composition_options": {
+    "unit_composition": {
       "type": "component",
       "repeatable": true,
-      "component": "datasheet.unit-composition-option",
+      "component": "datasheet.unit-composition",
       "required": true
     },
     "lead_units_list": {

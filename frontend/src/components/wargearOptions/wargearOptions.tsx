@@ -269,25 +269,17 @@ export default function WargearOptions({
   // Function to determine if the unit is a singular model.
   // If it is, then the gear options should be displayed as 'this model'
   function IsSingleModelUnit() {
-    const compOptions = unitDatasheet.attributes.unit_composition_options;
+    const compOptions = unitDatasheet.attributes.unit_composition;
 
     if (compOptions.length > 1) {
-      // Singular models don't have multiple composition options
-      return false;
-    }
-
-    if (compOptions[0].models_in_unit.length > 1) {
       // Singular models don't have multiple types of models
       return false;
     }
 
     if (
-      compOptions[0].models_in_unit[0].min > 1 ||
-      (compOptions[0].models_in_unit[0].max &&
-        compOptions[0].models_in_unit[0].max > 1)
+      compOptions[0].min > 1 ||
+      (compOptions[0].max && compOptions[0].max > 1)
     ) {
-      console.log("max: ", compOptions[0].models_in_unit[0].max);
-      console.log("min: ", compOptions[0].models_in_unit[0].min);
       // Units with squad sizes can't be singular
       return false;
     }

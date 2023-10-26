@@ -23,6 +23,7 @@ import WeaponTable, {
   RangedWeapon,
 } from "../components/weaponTable/weaponTable";
 import WargearOptions from "../components/wargearOptions/wargearOptions";
+import UnitComposition from "../components/unitComposition/unitComposition";
 
 function isWargear(
   component: DatasheetWargear | DatasheetWeapon
@@ -77,98 +78,94 @@ export default function DatasheetListPage() {
     let newMelee = [...meleeWeapons];
     let newWargear = [...wargearList];
 
-    data.unitDatasheet.data.attributes.unit_composition_options.map(
-      (unitOption) => {
-        unitOption.models_in_unit.map((models_in_unit) => {
-          models_in_unit.model.data.attributes.default_wargear.map((gear) => {
-            if (isWargear(gear)) {
-              // Check if id of wargear already exists in newWargear
-              let check = false;
-              newWargear.forEach((wargear) => {
-                if (wargear.id === gear.wargear.data.id) {
-                  check = true;
-                }
-              });
-              if (check === false) {
-                if (newWargear.length === 0) {
-                  newWargear.push({
-                    id: gear.wargear.data.id,
-                    Name: gear.wargear.data.attributes.display_name,
-                    Ability: gear.wargear.data.attributes.ability,
-                  });
-                }
+    data.unitDatasheet.data.attributes.unit_composition.map(
+      (models_in_unit) => {
+        models_in_unit.model.data.attributes.default_wargear.map((gear) => {
+          if (isWargear(gear)) {
+            // Check if id of wargear already exists in newWargear
+            let check = false;
+            newWargear.forEach((wargear) => {
+              if (wargear.id === gear.wargear.data.id) {
+                check = true;
               }
-            } else if (isWeapon(gear)) {
-              // Check if id of wargear already exists in newWargear
-              let check = false;
-              newRanged.forEach((weapon) => {
-                if (weapon.id === gear.weapon.data.id) {
-                  check = true;
-                }
-              });
-              if (
-                check == false &&
-                gear.weapon.data.attributes.ranged_weapon_stats.length > 0
-              ) {
-                gear.weapon.data.attributes.ranged_weapon_stats.map(
-                  (weapon) => {
-                    let keywords = [];
-                    weapon.weapon_keywords.data.map((keyword) => {
-                      keywords.push(keyword.attributes.display_name);
-                    });
-
-                    newRanged.push({
-                      id: gear.weapon.data.id,
-                      Name:
-                        weapon.display_name_override ??
-                        gear.weapon.data.attributes.display_name,
-                      Keywords: keywords,
-                      Range: weapon.range + `"`,
-                      A: weapon.attacks,
-                      BS: weapon.skill + "+",
-                      S: weapon.strength,
-                      AP: "-" + weapon.penetration,
-                      D: weapon.damage,
-                    });
-                  }
-                );
-              }
-
-              check = false;
-
-              newMelee.forEach((weapon) => {
-                if (weapon.id === gear.weapon.data.id) {
-                  check = true;
-                }
-              });
-
-              if (
-                check == false &&
-                gear.weapon.data.attributes.melee_weapon_stats.length > 0
-              ) {
-                gear.weapon.data.attributes.melee_weapon_stats.map((weapon) => {
-                  let keywords = [];
-                  weapon.weapon_keywords.data.map((keyword) => {
-                    keywords.push(keyword.attributes.display_name);
-                  });
-
-                  newMelee.push({
-                    id: gear.weapon.data.id,
-                    Name:
-                      weapon.display_name_override ??
-                      gear.weapon.data.attributes.display_name,
-                    Keywords: keywords,
-                    Range: "Melee",
-                    A: weapon.attacks,
-                    WS: weapon.skill + "+",
-                    S: weapon.strength,
-                    AP: "-" + weapon.penetration,
-                    D: weapon.damage,
-                  });
+            });
+            if (check === false) {
+              if (newWargear.length === 0) {
+                newWargear.push({
+                  id: gear.wargear.data.id,
+                  Name: gear.wargear.data.attributes.display_name,
+                  Ability: gear.wargear.data.attributes.ability,
                 });
               }
             }
-          });
+          } else if (isWeapon(gear)) {
+            // Check if id of wargear already exists in newWargear
+            let check = false;
+            newRanged.forEach((weapon) => {
+              if (weapon.id === gear.weapon.data.id) {
+                check = true;
+              }
+            });
+            if (
+              check == false &&
+              gear.weapon.data.attributes.ranged_weapon_stats.length > 0
+            ) {
+              gear.weapon.data.attributes.ranged_weapon_stats.map((weapon) => {
+                let keywords = [];
+                weapon.weapon_keywords.data.map((keyword) => {
+                  keywords.push(keyword.attributes.display_name);
+                });
+
+                newRanged.push({
+                  id: gear.weapon.data.id,
+                  Name:
+                    weapon.display_name_override ??
+                    gear.weapon.data.attributes.display_name,
+                  Keywords: keywords,
+                  Range: weapon.range + `"`,
+                  A: weapon.attacks,
+                  BS: weapon.skill + "+",
+                  S: weapon.strength,
+                  AP: "-" + weapon.penetration,
+                  D: weapon.damage,
+                });
+              });
+            }
+
+            check = false;
+
+            newMelee.forEach((weapon) => {
+              if (weapon.id === gear.weapon.data.id) {
+                check = true;
+              }
+            });
+
+            if (
+              check == false &&
+              gear.weapon.data.attributes.melee_weapon_stats.length > 0
+            ) {
+              gear.weapon.data.attributes.melee_weapon_stats.map((weapon) => {
+                let keywords = [];
+                weapon.weapon_keywords.data.map((keyword) => {
+                  keywords.push(keyword.attributes.display_name);
+                });
+
+                newMelee.push({
+                  id: gear.weapon.data.id,
+                  Name:
+                    weapon.display_name_override ??
+                    gear.weapon.data.attributes.display_name,
+                  Keywords: keywords,
+                  Range: "Melee",
+                  A: weapon.attacks,
+                  WS: weapon.skill + "+",
+                  S: weapon.strength,
+                  AP: "-" + weapon.penetration,
+                  D: weapon.damage,
+                });
+              });
+            }
+          }
         });
       }
     );
@@ -232,7 +229,7 @@ export default function DatasheetListPage() {
           <h2>Wargear Options</h2>
           <WargearOptions unitDatasheet={data.unitDatasheet.data} />
           <h2>Unit Composition</h2>
-          <div></div>
+          <UnitComposition unitDatasheet={data.unitDatasheet.data} />
         </>
       ) : (
         <div>Loading...</div>
