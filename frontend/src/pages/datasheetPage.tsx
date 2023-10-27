@@ -386,9 +386,10 @@ export default function DatasheetListPage() {
               <section className={style.unitKeywords}>
                 <h3>KEYWORDS:</h3>
                 {data.unitDatasheet.data.attributes.unit_keywords.data.map(
-                  (keyword, i) => (
+                  (keyword, i, array) => (
                     <b className={style.keyword} key={"keyword" + i}>
-                      {keyword.attributes.display_name},{" "}
+                      {keyword.attributes.display_name}
+                      {i < array.length - 1 ? ", " : ""}
                     </b>
                   )
                 )}
