@@ -19,11 +19,15 @@ import StatlineTable, {
   Stats,
 } from "../components/statlineTable/statlineTable";
 import WeaponTable, {
-  MeleeWeapon,
   RangedWeapon,
-} from "../components/weaponTable/weaponTable";
+} from "../components/weaponTables/rangedWeaponTable";
 import WargearOptions from "../components/wargearOptions/wargearOptions";
 import UnitComposition from "../components/unitComposition/unitComposition";
+import ReactMarkdown from "react-markdown";
+import RangedWeaponTable from "../components/weaponTables/rangedWeaponTable";
+import MeleeWeaponTable, {
+  MeleeWeapon,
+} from "../components/weaponTables/meleeWeaponTable";
 
 function isWargear(
   component: DatasheetWargear | DatasheetWeapon
@@ -268,82 +272,125 @@ export default function DatasheetListPage() {
   }, [data]);
 
   return (
-    <div>
+    <div className={style.datasheetWrapper}>
       {data ? (
-        <>
-          <h1>{data.unitDatasheet.data.attributes.display_name}</h1>
-          <h2>Abilities</h2>
-          <div>
-            CORE:{" "}
-            {data.unitDatasheet.data.attributes.core_keywords.data.map(
-              (keyword, i, array) => (
-                <b key={"keyword" + i}>
-                  {keyword.attributes.display_name}
-                  {i < array.length - 1 ? ", " : ""}
-                </b>
-              )
-            )}
+        <div className={style.datasheet}>
+          {/* Top half of datacard */}
+          <div className={style.unitCard + style.unitCardTop}>
+            <section className={style.statlineSection}>
+              <h2>{data.unitDatasheet.data.attributes.display_name}</h2>
+              <StatlineTable unitDatasheet={data.unitDatasheet.data} />
+            </section>
+            <div className={style.unitBody}>
+              <div className={style.mainBody}>
+                <section className={style.rangedWeapons + style.weaponTable}>
+                  <h3>RANGED WEAPONS</h3>
+                  <RangedWeaponTable weapons={rangedWeapons} />
+                </section>
+                <section className={style.meleeWeapons + style.weaponTable}>
+                  <h3>MELEE WEAPONS</h3>
+                  <MeleeWeaponTable weapons={meleeWeapons} />
+                </section>
+              </div>
+              <div className={style.sideBody}>
+                <section className={style.abilities + style.unitAbilities}>
+                  <h3>ABILITIES</h3>
+                  <div className={style.abilitySubArea}>
+                    <h4>CORE: </h4>
+                    {data.unitDatasheet.data.attributes.core_keywords.data.map(
+                      (keyword, i, array) => (
+                        <b key={"keyword" + i}>
+                          {keyword.attributes.display_name}
+                          {i < array.length - 1 ? ", " : ""}
+                        </b>
+                      )
+                    )}
+                  </div>
+                  <div className={style.abilitySubArea}>
+                    <h4>FACTION: </h4>
+                    {data.unitDatasheet.data.attributes.has_faction_ability && (
+                      <b>
+                        {
+                          data.unitDatasheet.data.attributes.faction.data
+                            .attributes.ruleName
+                        }
+                      </b>
+                    )}
+                    {data.unitDatasheet.data.attributes.has_faction_ability &&
+                    data.unitDatasheet.data.attributes
+                      .has_extra_faction_ability &&
+                    data.unitDatasheet.data.attributes.faction.data.attributes
+                      .extraRuleName !== ""
+                      ? ", "
+                      : ""}
+                    {data.unitDatasheet.data.attributes
+                      .has_extra_faction_ability && (
+                      <b>
+                        {
+                          data.unitDatasheet.data.attributes.faction.data
+                            .attributes.extraRuleName
+                        }
+                      </b>
+                    )}
+                  </div>
+                  <div className={style.abilitySubArea}>
+                    <ul>
+                      {data.unitDatasheet.data.attributes.abilities.map(
+                        (ability, i) => (
+                          <li key={"ability" + i}>
+                            <b>{ability.name}:</b> {ability.description}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                </section>
+                <section className={style.abilities + style.wargearAbilities}>
+                  <h3>WARGEAR ABILITIES</h3>
+                  <ul>
+                    {wargearList.map((wargear, i) => (
+                      <li key={"wargear" + i}>
+                        <b>{wargear.name}:</b> {wargear.ability}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              </div>
+            </div>
           </div>
-          <div>
-            FACTION:{" "}
-            {data.unitDatasheet.data.attributes.has_faction_ability && (
-              <b>
-                {
-                  data.unitDatasheet.data.attributes.faction.data.attributes
-                    .ruleName
-                }
-              </b>
-            )}
-            {data.unitDatasheet.data.attributes.has_faction_ability &&
-            data.unitDatasheet.data.attributes.has_extra_faction_ability &&
-            data.unitDatasheet.data.attributes.faction.data.attributes
-              .extraRuleName !== ""
-              ? ", "
-              : ""}
-            {data.unitDatasheet.data.attributes.has_extra_faction_ability && (
-              <b>
-                {
-                  data.unitDatasheet.data.attributes.faction.data.attributes
-                    .extraRuleName
-                }
-              </b>
-            )}
+          {/* Bottom half of datacard */}
+          <div className={style.unitCard + style.unitCardBottom}>
+            <div className={style.unitBody}>
+              <div className={style.mainBody}>
+                <h3>Wargear Options</h3>
+                <WargearOptions unitDatasheet={data.unitDatasheet.data} />
+              </div>
+              <div className={style.sideBody}>
+                <h3>Unit Composition</h3>
+                <UnitComposition unitDatasheet={data.unitDatasheet.data} />
+              </div>
+              <div className={style.keywordsFooter}>
+                <section className={style.rangedWeapons + style.weaponTable}>
+                  <h3>KEYWORDS:</h3>
+                  <ul>
+                    {data.unitDatasheet.data.attributes.unit_keywords.data.map(
+                      (keyword, i) => (
+                        <li key={"keyword" + i}>
+                          {keyword.attributes.display_name}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </section>
+                <div>ICON</div>
+                <section className={style.meleeWeapons + style.weaponTable}>
+                  <h3>FACTION KEYWORDS</h3>
+                  TODO
+                </section>
+              </div>
+            </div>
           </div>
-          <ul>
-            {data.unitDatasheet.data.attributes.abilities.map((ability, i) => (
-              <li key={"ability" + i}>
-                <b>{ability.name}:</b> {ability.description}
-              </li>
-            ))}
-          </ul>
-          <h2>Wargear Abilities</h2>
-          <ul>
-            {wargearList.map((wargear, i) => (
-              <li key={"wargear" + i}>
-                <b>{wargear.name}:</b> {wargear.ability}
-              </li>
-            ))}
-          </ul>
-          <h2>Stats</h2>
-          <StatlineTable unitDatasheet={data.unitDatasheet.data} />
-          <h2>Weapons</h2>
-          <WeaponTable
-            rangedWeapons={rangedWeapons}
-            meleeWeapons={meleeWeapons}
-          />
-          <h2>Wargear Options</h2>
-          <WargearOptions unitDatasheet={data.unitDatasheet.data} />
-          <h2>Unit Composition</h2>
-          <UnitComposition unitDatasheet={data.unitDatasheet.data} />
-          <h2>Unit Keywords</h2>
-          <ul>
-            {data.unitDatasheet.data.attributes.unit_keywords.data.map(
-              (keyword, i) => (
-                <li key={"keyword" + i}>{keyword.attributes.display_name}</li>
-              )
-            )}
-          </ul>
-        </>
+        </div>
       ) : (
         <div>Loading...</div>
       )}
