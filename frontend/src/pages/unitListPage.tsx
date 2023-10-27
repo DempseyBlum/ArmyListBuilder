@@ -11,8 +11,9 @@ import {
   DatasheetsReturnType,
   factionDatasheetsQuery,
 } from "../../queries/datasheetQueries";
+import style from "../styles/unitListPage.module.scss";
 
-export default function DatasheetListPage() {
+export default function UnitListPage() {
   useEffect(() => {
     document.title = titleCreator("Datasheet List");
   }, []);
@@ -48,18 +49,20 @@ export default function DatasheetListPage() {
   } as OperationVariables);
 
   return (
-    <div>
+    <div className={style.unitListPageWrapper}>
       {data && factionData ? (
         <>
           <h1>{factionData.faction.data.attributes.display_name}</h1>
-          <h2>Units</h2>
-          <ul>
+          <section className={style.unitsListWrapper}>
+            <h2 className={style.unitSectionTitle}>Units</h2>
             {data.unitDatasheets.data.map((unit, i) => (
               <Link to={"/faction/" + contentId + "/unit/" + unit.id}>
-                <div key={"unit" + i}>{unit.attributes.display_name}</div>
+                <div className={style.unitTile} key={"unit" + i}>
+                  {unit.attributes.display_name}
+                </div>
               </Link>
             ))}
-          </ul>
+          </section>
         </>
       ) : (
         <div>Loading...</div>
