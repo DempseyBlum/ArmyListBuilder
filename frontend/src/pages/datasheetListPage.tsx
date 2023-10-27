@@ -51,9 +51,6 @@ export default function DatasheetListPage() {
     <div>
       {data && factionData ? (
         <>
-          <Link to={"/faction/" + contentId}>
-            <button>{"< "}Back</button>
-          </Link>
           <h1>{factionData.faction.data.attributes.display_name}</h1>
           <h2>Units</h2>
           <ul>

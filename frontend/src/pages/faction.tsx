@@ -7,6 +7,7 @@ import {
 } from "../../queries/factionQueries";
 import { Link, useParams } from "react-router-dom";
 import { OperationVariables } from "@apollo/client";
+import style from "./factionPage.module.scss";
 
 export default function FactionPage() {
   useEffect(() => {
@@ -33,9 +34,6 @@ export default function FactionPage() {
     <div>
       {data ? (
         <>
-          <Link to={"/"}>
-            <button>{"< "}Back</button>
-          </Link>
           <h1>{data.faction.data.attributes.display_name}</h1>
           <h2>Rules</h2>
           <ul>

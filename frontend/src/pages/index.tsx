@@ -19,9 +19,10 @@ function App() {
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
-        <div className="w-screen bg-gray-100 h-screen overflow-y-auto">
-          <div className="w-4/5 mx-auto mt-4">
-            {/* <Header title={"Army Builder"} /> */}
+        <div className="page_wrapper">
+          <Header title={"Administratum"} />
+          {/* <Header title={"Army Builder"} /> */}
+          <div className="page_content_wrapper">
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/faction/:contentId" element={<FactionPage />} />

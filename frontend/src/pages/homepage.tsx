@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { OperationVariables } from "@apollo/client";
 import { titleCreator } from "../../utils/titleCreator";
+import style from "../styles/homePage.module.scss";
 // Not being used, but decent format for pagination in the future.
 interface Meta {
   pagination: {
@@ -39,22 +40,23 @@ export default function HomePage() {
   } as OperationVariables);
 
   return (
-    <div>
-      <h1>Home Page</h1>
-      <h2>Factions</h2>
-      <ul>
+    <div className={style.homePageWrapper}>
+      <section className={style.factionsWrapper}>
+        <h2 className={style.factionSectionTitle}>Factions</h2>
         {data ? (
           data.factions.data.map((faction, i) => (
             <Link to={"/faction/" + faction.id}>
-              <li key={faction.id.toString()}>
-                {faction.attributes.display_name}
-              </li>
+              <div className={style.factionTile} key={faction.id.toString()}>
+                <h3 className={style.factionName}>
+                  {faction.attributes.display_name}
+                </h3>
+              </div>
             </Link>
           ))
         ) : (
           <div>Loading...</div>
         )}
-      </ul>
+      </section>
     </div>
   );
 }

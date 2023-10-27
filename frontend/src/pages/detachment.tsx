@@ -37,11 +37,6 @@ export default function DetachmentPage() {
     <div>
       {data ? (
         <>
-          <Link
-            to={"/faction/" + data.detachment.data.attributes.faction.data.id}
-          >
-            <button>{"< "}Back</button>
-          </Link>
           <h1>{data.detachment.data.attributes.display_name}</h1>
           <h2>Enhancements</h2>
           <ul>

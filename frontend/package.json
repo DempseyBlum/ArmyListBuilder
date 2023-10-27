@@ -24,6 +24,9 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.17",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@tanstack/react-table": "^8.9.3",
     "@types/css-modules": "^1.0.2",
     "graphql": "^16.7.1",

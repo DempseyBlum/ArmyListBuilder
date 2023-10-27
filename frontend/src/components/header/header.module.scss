@@ -1,0 +1,44 @@
+.headerWrapper {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  margin: 0;
+  height: 4rem;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+
+  .headerLeft {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+
+    .pageHeader {
+      padding-left: 30px;
+    }
+  }
+
+  .headerRight {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}

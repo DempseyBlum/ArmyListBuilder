@@ -271,9 +271,6 @@ export default function DatasheetListPage() {
     <div>
       {data ? (
         <>
-          <Link to={"/faction/" + contentId + "/faction_datasheets/"}>
-            <button>{"< "}Back</button>
-          </Link>
           <h1>{data.unitDatasheet.data.attributes.display_name}</h1>
           <h2>Abilities</h2>
           <div>
