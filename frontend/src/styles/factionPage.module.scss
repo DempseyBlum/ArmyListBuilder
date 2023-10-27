@@ -1,4 +1,4 @@
-.homePageWrapper {
+.factionPageWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,35 +6,67 @@
   height: 100%;
   margin-top: 5rem;
 
-  .factionsWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .sectionTitle {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-decoration: underline;
     margin-bottom: 2rem;
+  }
+}
 
-    .factionSectionTitle {
-      font-size: 2rem;
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  margin-bottom: 2rem;
+
+  .factionTitle {
+  }
+
+  .seeUnitsButton {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000;
+    margin: unset;
+    padding: 5px 14px;
+  }
+}
+
+.rulesWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  .rules {
+    max-width: 40%;
+  }
+}
+
+.detachmentsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  .detachmentTile {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding: 18px 60px;
+
+    background-color: lightgrey;
+
+    .detachmentName {
+      font-size: 1.5rem;
       font-weight: 500;
-      margin-bottom: 1rem;
-      text-decoration: underline;
-      margin-bottom: 2rem;
-    }
-
-    .factionTile {
-      font-size: 2rem;
-      font-weight: 500;
-      margin-bottom: 1rem;
-      padding: 18px 60px;
-
-      background-color: lightgrey;
-
-      .factionName {
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: #000;
-        margin: unset;
-      }
+      color: #000;
+      margin: unset;
     }
   }
 }

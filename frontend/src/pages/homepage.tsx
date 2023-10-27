@@ -50,6 +50,9 @@ export default function HomePage() {
                 <h3 className={style.factionName}>
                   {faction.attributes.display_name}
                 </h3>
+                <Link to={"/faction/" + faction.id + "/faction_datasheets"}>
+                  <button className={style.unitsButton}>UNITS</button>
+                </Link>
               </div>
             </Link>
           ))
