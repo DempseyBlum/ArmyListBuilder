@@ -5,7 +5,8 @@
   justify-content: flex-start;
   height: 100%;
   width: 100%;
-  margin-top: 4.5rem;
+  margin-top: 3rem;
+  padding-bottom: 50px;
 }
 
 .datasheet {
@@ -18,5 +19,149 @@
 
   h4 {
     font-weight: 500;
+    margin: unset;
+  }
+}
+
+.unitCard {
+  .cardHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 20px;
+  }
+  .cardBody {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    height: 500px;
+    box-sizing: border-box;
+
+    .mainBody {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 65%;
+      height: 100%;
+      padding: 20px 0 20px 0;
+      border: 1px solid black;
+    }
+
+    .sideBody {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 35%;
+      height: 100%;
+      border: 1px solid black;
+      padding: 0 20px 20px 20px;
+    }
+  }
+  .sideBody {
+  }
+}
+
+.unitCardTop {
+  .statlineHeader {
+  }
+
+  .weaponTable {
+    padding-left: 20px;
+  }
+
+  .abilities {
+    .unitAbilitiesWrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .unitAbility {
+        padding-top: 15px;
+      }
+    }
+    .abilitySubArea {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px 0 10px 0;
+
+      h4 {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.unitCardBottom {
+  .keywordsFooter {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 25px;
+    border: solid 1px black;
+
+    h3 {
+      margin: unset;
+      padding: 5px 5px 5px 0;
+      font-weight: 500;
+    }
+
+    .unitKeywords {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      width: 65%;
+      height: 100%;
+      padding-left: 20px;
+    }
+    .factionKeywordsWrapper {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      width: 35%;
+      height: 100%;
+      background-color: black;
+      .factionIcon {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        background-color: grey;
+        border-radius: 100%;
+        margin-left: -30px;
+        margin-right: 20px;
+      }
+      .factionKeywords {
+        h3 {
+          font-size: 1.1rem;
+          padding-top: 0px;
+        }
+        color: white;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+    }
   }
 }

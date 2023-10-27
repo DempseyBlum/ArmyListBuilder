@@ -28,6 +28,7 @@ import RangedWeaponTable from "../components/weaponTables/rangedWeaponTable";
 import MeleeWeaponTable, {
   MeleeWeapon,
 } from "../components/weaponTables/meleeWeaponTable";
+import classnames from "classnames";
 
 function isWargear(
   component: DatasheetWargear | DatasheetWeapon
@@ -276,24 +277,32 @@ export default function DatasheetListPage() {
       {data ? (
         <div className={style.datasheet}>
           {/* Top half of datacard */}
-          <div className={style.unitCard + style.unitCardTop}>
-            <section className={style.statlineSection}>
+          <div className={classnames(style.unitCard, style.unitCardTop)}>
+            <section
+              className={classnames(style.cardHeader, style.statlineHeader)}
+            >
               <h2>{data.unitDatasheet.data.attributes.display_name}</h2>
               <StatlineTable unitDatasheet={data.unitDatasheet.data} />
             </section>
-            <div className={style.unitBody}>
+            <div className={style.cardBody}>
               <div className={style.mainBody}>
-                <section className={style.rangedWeapons + style.weaponTable}>
+                <section
+                  className={classnames(style.rangedWeapons, style.weaponTable)}
+                >
                   <h3>RANGED WEAPONS</h3>
                   <RangedWeaponTable weapons={rangedWeapons} />
                 </section>
-                <section className={style.meleeWeapons + style.weaponTable}>
+                <section
+                  className={classnames(style.meleeWeapons, style.weaponTable)}
+                >
                   <h3>MELEE WEAPONS</h3>
                   <MeleeWeaponTable weapons={meleeWeapons} />
                 </section>
               </div>
               <div className={style.sideBody}>
-                <section className={style.abilities + style.unitAbilities}>
+                <section
+                  className={classnames(style.abilities, style.unitAbilities)}
+                >
                   <h3>ABILITIES</h3>
                   <div className={style.abilitySubArea}>
                     <h4>CORE: </h4>
@@ -333,19 +342,22 @@ export default function DatasheetListPage() {
                       </b>
                     )}
                   </div>
-                  <div className={style.abilitySubArea}>
-                    <ul>
-                      {data.unitDatasheet.data.attributes.abilities.map(
-                        (ability, i) => (
-                          <li key={"ability" + i}>
-                            <b>{ability.name}:</b> {ability.description}
-                          </li>
-                        )
-                      )}
-                    </ul>
+                  <div className={style.unitAbilitiesWrapper}>
+                    {data.unitDatasheet.data.attributes.abilities.map(
+                      (ability, i) => (
+                        <div className={style.unitAbility} key={"ability" + i}>
+                          <b>{ability.name}:</b> {ability.description}
+                        </div>
+                      )
+                    )}
                   </div>
                 </section>
-                <section className={style.abilities + style.wargearAbilities}>
+                <section
+                  className={classnames(
+                    style.abilities,
+                    style.wargearAbilities
+                  )}
+                >
                   <h3>WARGEAR ABILITIES</h3>
                   <ul>
                     {wargearList.map((wargear, i) => (
@@ -359,8 +371,8 @@ export default function DatasheetListPage() {
             </div>
           </div>
           {/* Bottom half of datacard */}
-          <div className={style.unitCard + style.unitCardBottom}>
-            <div className={style.unitBody}>
+          <div className={classnames(style.unitCard, style.unitCardBottom)}>
+            <div className={style.cardBody}>
               <div className={style.mainBody}>
                 <h3>Wargear Options</h3>
                 <WargearOptions unitDatasheet={data.unitDatasheet.data} />
@@ -369,25 +381,25 @@ export default function DatasheetListPage() {
                 <h3>Unit Composition</h3>
                 <UnitComposition unitDatasheet={data.unitDatasheet.data} />
               </div>
-              <div className={style.keywordsFooter}>
-                <section className={style.rangedWeapons + style.weaponTable}>
-                  <h3>KEYWORDS:</h3>
-                  <ul>
-                    {data.unitDatasheet.data.attributes.unit_keywords.data.map(
-                      (keyword, i) => (
-                        <li key={"keyword" + i}>
-                          {keyword.attributes.display_name}
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </section>
-                <div>ICON</div>
-                <section className={style.meleeWeapons + style.weaponTable}>
+            </div>
+            <div className={style.keywordsFooter}>
+              <section className={style.unitKeywords}>
+                <h3>KEYWORDS:</h3>
+                {data.unitDatasheet.data.attributes.unit_keywords.data.map(
+                  (keyword, i) => (
+                    <b className={style.keyword} key={"keyword" + i}>
+                      {keyword.attributes.display_name},{" "}
+                    </b>
+                  )
+                )}
+              </section>
+              <section className={style.factionKeywordsWrapper}>
+                <div className={style.factionIcon}>ICON</div>
+                <div className={style.factionKeywords}>
                   <h3>FACTION KEYWORDS</h3>
                   TODO
-                </section>
-              </div>
+                </div>
+              </section>
             </div>
           </div>
         </div>
