@@ -52,7 +52,16 @@ export default function UnitListPage() {
     <div className={style.unitListPageWrapper}>
       {data && factionData ? (
         <>
-          <h1>{factionData.faction.data.attributes.display_name}</h1>
+          <div className={style.titleWrapper}>
+            <h1 className={style.factionTitle}>
+              {factionData.faction.data.attributes.display_name}
+            </h1>
+            <Link to={"/faction/" + factionData.faction.data.id}>
+              <button className={style.seeFactionRulesButton}>
+                Faction Rules
+              </button>
+            </Link>
+          </div>
           <section className={style.unitsListWrapper}>
             <h2 className={style.unitSectionTitle}>Units</h2>
             {data.unitDatasheets.data.map((unit, i) => (
