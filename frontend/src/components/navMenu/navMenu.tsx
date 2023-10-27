@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import style from "./navMenu.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faFlag, faHome } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 export const NavMenu = ({
@@ -32,6 +32,10 @@ export const NavMenu = ({
             Home
           </div>
         </Link>
+        <div className={style.navOption}>
+          <FontAwesomeIcon icon={faFlag} />
+          Factions (dropdown)
+        </div>
       </div>
     </div>
   );

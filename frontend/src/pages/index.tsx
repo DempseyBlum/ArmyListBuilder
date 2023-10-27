@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../components/header/header";
 import Homepage from "./homepage";
-import DetachmentPage from "./detachment";
+import DetachmentPage from "./detachmentPage";
 import FactionPage from "./factionPage";
 import DatasheetPage from "./datasheetPage";
 import UnitListPage from "./unitListPage";

@@ -1,0 +1,62 @@
+.detachmentPageWrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: calc(100% - 4rem);
+  margin-top: 4rem;
+}
+
+.detachmentPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  width: 60%;
+}
+
+.enhancementsWrapper {
+  width: 100%;
+  .enhancementList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    .enhancement {
+    }
+  }
+}
+
+.stratagemsWrapper {
+  width: 100%;
+  .stratagemList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    .stratagem {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+      .stratagemCost {
+        padding-left: 10px;
+      }
+
+      .stratagemInfoArea {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+
+        p {
+          margin: unset;
+        }
+      }
+    }
+  }
+}
