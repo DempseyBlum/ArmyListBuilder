@@ -373,7 +373,7 @@ export default function DatasheetListPage() {
           {/* Bottom half of datacard */}
           <div className={classnames(style.unitCard, style.unitCardBottom)}>
             <div className={style.cardBody}>
-              <div className={style.mainBody}>
+              <div className={classnames(style.mainBody, style.wargearOptions)}>
                 <h3>Wargear Options</h3>
                 <WargearOptions unitDatasheet={data.unitDatasheet.data} />
               </div>
