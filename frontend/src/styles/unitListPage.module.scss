@@ -1,9 +1,10 @@
 .unitListPageWrapper {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100%;
+  height: calc(100% - 4.5rem);
   margin-top: 4.5rem;
 }
 
