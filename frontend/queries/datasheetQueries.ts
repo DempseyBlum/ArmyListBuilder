@@ -113,7 +113,7 @@ export interface CompositionOption {
         wounds: number;
         leadership: number;
         objective_control: number;
-        invul_save: number;
+        invul_save?: number;
         default_wargear: [DatasheetWargear | DatasheetWeapon];
       };
     };

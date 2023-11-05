@@ -13,7 +13,7 @@ export type Stats = {
   W: number;
   LD: number;
   OC: number;
-  INVUL: number;
+  INVUL?: number;
 };
 
 export default function StatlineTable({
@@ -86,6 +86,18 @@ export default function StatlineTable({
     setStats([...newStats]);
   }, [unitDatasheet]);
 
+  function CheckInvul() {
+    let check = false;
+
+    stats.forEach((statline) => {
+      if (statline.INVUL !== null) {
+        check = true;
+      }
+    });
+
+    return check;
+  }
+
   return (
     <div className={style.unitStatlineWrapper}>
       <div className={style.statWrapper}>
@@ -136,14 +148,18 @@ export default function StatlineTable({
           </div>
         ))}
       </div>
-      <div className={style.statWrapper}>
-        <div className={style.statChar}>INVUL</div>
-        {stats.map((statline, i) => (
-          <div className={style.statValBorder}>
-            <div className={style.statVal}>{statline.INVUL}</div>
-          </div>
-        ))}
-      </div>
+      {CheckInvul() ? (
+        <div className={style.statWrapper}>
+          <div className={style.statChar}>INVUL</div>
+          {stats.map((statline, i) => (
+            <div className={style.statValBorder}>
+              <div className={style.statVal}>{statline.INVUL}+</div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
