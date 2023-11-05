@@ -6,7 +6,7 @@
   left: 0;
   z-index: 999;
 
-  background-color: #fffffa;
+  background-color: #3c3c3c;
   border-right: solid 1px #e0e0e0;
 }
 
@@ -27,6 +27,7 @@
     outline: none;
   }
   svg {
+    color: rgb(218, 218, 218);
     width: 1.7rem;
     height: 1.7rem;
   }
@@ -47,6 +48,11 @@
   .navOption {
     padding-bottom: 15px;
     font-size: 1.4rem;
+    color: rgb(218, 218, 218);
+
+    :active {
+      color: rgb(218, 218, 218);
+    }
     svg {
       margin-right: 10px;
       width: 1.3rem;
