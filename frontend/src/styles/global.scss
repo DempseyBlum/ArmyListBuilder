@@ -5,6 +5,7 @@
   top: 0;
   left: 0;
   font-family: "Roboto", sans-serif;
+  // font-family: ConduitITC, times new roman, serif;
   color: rgb(218, 218, 218);
 }
 a:link {
@@ -22,7 +23,13 @@ a:active {
 .page_content_wrapper {
   position: absolute;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
   width: 100%;
+  min-height: calc(100vh - 4rem);
   top: 4rem;
   background-color: #202020;
 }

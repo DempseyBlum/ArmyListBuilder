@@ -277,11 +277,13 @@ export default function DatasheetListPage() {
       {data ? (
         <div className={style.datasheet}>
           {/* Top half of datacard */}
-          <div className={classnames(style.unitCard, style.unitCardTop)}>
+          <div className={classnames(style.unitCard)}>
             <section
               className={classnames(style.cardHeader, style.statlineHeader)}
             >
-              <h2>{data.unitDatasheet.data.attributes.display_name}</h2>
+              <h2>
+                {data.unitDatasheet.data.attributes.display_name.toUpperCase()}
+              </h2>
               <StatlineTable unitDatasheet={data.unitDatasheet.data} />
             </section>
             <div className={style.cardBody}>
@@ -289,14 +291,16 @@ export default function DatasheetListPage() {
                 <section
                   className={classnames(style.rangedWeapons, style.weaponTable)}
                 >
-                  <h3>RANGED WEAPONS</h3>
                   <RangedWeaponTable weapons={rangedWeapons} />
                 </section>
                 <section
                   className={classnames(style.meleeWeapons, style.weaponTable)}
                 >
-                  <h3>MELEE WEAPONS</h3>
                   <MeleeWeaponTable weapons={meleeWeapons} />
+                </section>
+                <section className={classnames(style.wargearOptions)}>
+                  <h3>WARGEAR OPTIONS</h3>
+                  <WargearOptions unitDatasheet={data.unitDatasheet.data} />
                 </section>
               </div>
               <div className={style.sideBody}>
@@ -367,41 +371,33 @@ export default function DatasheetListPage() {
                     ))}
                   </ul>
                 </section>
+                <section className={style.unitComposition}>
+                  <h3>UNIT COMPOSITION</h3>
+                  <UnitComposition unitDatasheet={data.unitDatasheet.data} />
+                </section>
               </div>
             </div>
           </div>
           {/* Bottom half of datacard */}
-          <div className={classnames(style.unitCard, style.unitCardBottom)}>
-            <div className={style.cardBody}>
-              <div className={classnames(style.mainBody, style.wargearOptions)}>
-                <h3>Wargear Options</h3>
-                <WargearOptions unitDatasheet={data.unitDatasheet.data} />
+          <div className={style.keywordsFooter}>
+            <section className={style.unitKeywords}>
+              <h3>KEYWORDS:</h3>
+              {data.unitDatasheet.data.attributes.unit_keywords.data.map(
+                (keyword, i, array) => (
+                  <b className={style.keyword} key={"keyword" + i}>
+                    {keyword.attributes.display_name}
+                    {i < array.length - 1 ? ", " : ""}
+                  </b>
+                )
+              )}
+            </section>
+            <section className={style.factionKeywordsWrapper}>
+              <div className={style.factionIcon}>ICON</div>
+              <div className={style.factionKeywords}>
+                <h3>FACTION KEYWORDS</h3>
+                TODO
               </div>
-              <div className={style.sideBody}>
-                <h3>Unit Composition</h3>
-                <UnitComposition unitDatasheet={data.unitDatasheet.data} />
-              </div>
-            </div>
-            <div className={style.keywordsFooter}>
-              <section className={style.unitKeywords}>
-                <h3>KEYWORDS:</h3>
-                {data.unitDatasheet.data.attributes.unit_keywords.data.map(
-                  (keyword, i, array) => (
-                    <b className={style.keyword} key={"keyword" + i}>
-                      {keyword.attributes.display_name}
-                      {i < array.length - 1 ? ", " : ""}
-                    </b>
-                  )
-                )}
-              </section>
-              <section className={style.factionKeywordsWrapper}>
-                <div className={style.factionIcon}>ICON</div>
-                <div className={style.factionKeywords}>
-                  <h3>FACTION KEYWORDS</h3>
-                  TODO
-                </div>
-              </section>
-            </div>
+            </section>
           </div>
         </div>
       ) : (

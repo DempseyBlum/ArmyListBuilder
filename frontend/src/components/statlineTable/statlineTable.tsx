@@ -87,33 +87,63 @@ export default function StatlineTable({
   }, [unitDatasheet]);
 
   return (
-    <div className={style.statlineTableWrapper}>
-      <table>
-        <thead>
-          <tr>
-            <th>M</th>
-            <th>T</th>
-            <th>SV</th>
-            <th>W</th>
-            <th>LD</th>
-            <th>OC</th>
-            <th>INVUL</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stats.map((statline, i) => (
-            <tr key={"statline" + i}>
-              <td>{statline.M + `"`}</td>
-              <td>{statline.T}</td>
-              <td>{statline.SV + "+"}</td>
-              <td>{statline.W}</td>
-              <td>{statline.LD}</td>
-              <td>{statline.OC}</td>
-              <td>{statline.INVUL + "+"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className={style.unitStatlineWrapper}>
+      <div className={style.statWrapper}>
+        <div className={style.statChar}>M</div>
+        {stats.map((statline, i) => (
+          <div className={style.statValBorder}>
+            <div className={style.statVal}>{statline.M}</div>
+          </div>
+        ))}
+      </div>
+      <div className={style.statWrapper}>
+        <div className={style.statChar}>T</div>
+        {stats.map((statline, i) => (
+          <div className={style.statValBorder}>
+            <div className={style.statVal}>{statline.T}</div>
+          </div>
+        ))}
+      </div>
+      <div className={style.statWrapper}>
+        <div className={style.statChar}>SV</div>
+        {stats.map((statline, i) => (
+          <div className={style.statValBorder}>
+            <div className={style.statVal}>{statline.SV}</div>
+          </div>
+        ))}
+      </div>
+      <div className={style.statWrapper}>
+        <div className={style.statChar}>W</div>
+        {stats.map((statline, i) => (
+          <div className={style.statValBorder}>
+            <div className={style.statVal}>{statline.W}</div>
+          </div>
+        ))}
+      </div>
+      <div className={style.statWrapper}>
+        <div className={style.statChar}>LD</div>
+        {stats.map((statline, i) => (
+          <div className={style.statValBorder}>
+            <div className={style.statVal}>{statline.LD}</div>
+          </div>
+        ))}
+      </div>
+      <div className={style.statWrapper}>
+        <div className={style.statChar}>OC</div>
+        {stats.map((statline, i) => (
+          <div className={style.statValBorder}>
+            <div className={style.statVal}>{statline.OC}</div>
+          </div>
+        ))}
+      </div>
+      <div className={style.statWrapper}>
+        <div className={style.statChar}>INVUL</div>
+        {stats.map((statline, i) => (
+          <div className={style.statValBorder}>
+            <div className={style.statVal}>{statline.INVUL}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

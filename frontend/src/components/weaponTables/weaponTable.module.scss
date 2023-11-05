@@ -1,0 +1,47 @@
+.weaponTableWrapper {
+  table {
+    text-align: center;
+    border-collapse: collapse;
+    .statHeaders {
+      font-size: 1.1rem;
+      background-color: rgb(92, 14, 14);
+
+      .statHeader {
+        padding: 2px 8px 2px 8px;
+      }
+    }
+
+    .nameHeader {
+      width: 50%;
+      text-align: left;
+    }
+
+    .weaponName {
+      text-align: left;
+      .nameWrapper {
+        display: flex;
+        flex-direction: row;
+
+        .keywordsWrapper {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: flex-start;
+          background-color: white;
+          color: black;
+          margin-left: 8px;
+          padding: 1px;
+        }
+      }
+    }
+
+    td {
+      width: 42px;
+      padding: 3px 8px 3px 8px;
+    }
+
+    tbody :nth-child(2n) td {
+      background-color: #2e2e2e;
+    }
+  }
+}
