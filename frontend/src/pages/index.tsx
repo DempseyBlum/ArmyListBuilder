@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Header from "../components/header/header";
 import Homepage from "./homepage";
 import DetachmentPage from "./detachmentPage";
@@ -17,7 +17,7 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ApolloProvider client={client}>
         <div className="page_wrapper">
           <Header title={"Administratum"} />
@@ -42,7 +42,7 @@ function App() {
           </div>
         </div>
       </ApolloProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
